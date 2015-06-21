@@ -2,11 +2,13 @@ package com.online.market.admin;
 
 import java.io.File;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -23,14 +25,16 @@ import cn.bmob.v3.listener.UploadFileListener;
 
 import com.online.market.admin.bean.CommodityBean;
 import com.online.market.admin.util.BitmapUtil;
+import com.online.market.admin.util.DialogUtil;
 import com.online.market.admin.util.ProgressUtil;
 
-public class MainActivity extends BaseActiviity {
+public class PublishCommodityActivity extends BaseActiviity {
 	/**
 	 * SDK初始化建议放在启动页
 	 */
 	public static String APPID = "bb9c8700c4d1821c09bfebaf1ba006b1";
 	public int PICK_REQUEST_CODE = 0;
+	public int 	TAKE_PHOTO_CODE=1;
 	
 	private EditText etName;
 	private EditText etPrice;
@@ -95,7 +99,23 @@ public class MainActivity extends BaseActiviity {
 			
 			@Override
 			public void onClick(View arg0) {
-				getFileFromSD();
+				DialogUtil.dialog(PublishCommodityActivity.this, "选择图片方式", "拍照", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						takePhoto();
+						dialog.dismiss();
+						
+					}
+				}, "相册", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						getFileFromSD();
+						dialog.dismiss();
+					}
+				});
+				
 			}
 		});
 	}
@@ -103,7 +123,7 @@ public class MainActivity extends BaseActiviity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
+		if (resultCode == RESULT_OK&&requestCode==PICK_REQUEST_CODE) {
 			Uri uri = data.getData();
 			try {
 				String[] pojo = { MediaStore.Images.Media.DATA };
@@ -120,8 +140,16 @@ public class MainActivity extends BaseActiviity {
 				}
 
 			} catch (Exception e) {
+				
 			}
 
+		}else if (resultCode == RESULT_OK&&requestCode==TAKE_PHOTO_CODE){
+			String path = Environment.getExternalStorageDirectory()
+                    + "/temp.jpg";
+
+			if (path != null) {
+				saveThubPic(path);
+			}
 		}
 	}
 	
@@ -154,6 +182,13 @@ public class MainActivity extends BaseActiviity {
 		intent.setType("image/*");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
 		startActivityForResult(intent, PICK_REQUEST_CODE);
+	}
+	
+	private void takePhoto(){
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment
+            .getExternalStorageDirectory(),"temp.jpg")));
+        startActivityForResult(intent, TAKE_PHOTO_CODE);
 	}
 	
     private void uploadFile() {
@@ -190,7 +225,7 @@ public class MainActivity extends BaseActiviity {
 			@Override
 			public void onSuccess() {
 				toastMsg("publish成功");
-				
+				finish();
 				ProgressUtil.closeProgress();
 			}
 

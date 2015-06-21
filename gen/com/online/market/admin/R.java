@@ -10,28 +10,164 @@ package com.online.market.admin;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int base_bg=0x7f040003;
+        public static final int black=0x7f040002;
+        public static final int black_overlay=0x7f040049;
+        public static final int ble_blue=0x7f04004a;
+        public static final int blue=0x7f04000b;
+        public static final int blue_press=0x7f040019;
+        public static final int bus_tag_default=0x7f040058;
+        public static final int calendar_active_month_bg=0x7f04004c;
+        public static final int calendar_bg=0x7f04004d;
+        public static final int calendar_divider=0x7f04004e;
+        public static final int calendar_highlighted_day_bg=0x7f040051;
+        public static final int calendar_inactive_month_bg=0x7f04004f;
+        public static final int calendar_selected_day_bg=0x7f040050;
+        public static final int calendar_selected_range_bg=0x7f040052;
+        public static final int calendar_text_active=0x7f040054;
+        public static final int calendar_text_inactive=0x7f040053;
+        public static final int calendar_text_selected=0x7f040055;
+        public static final int calendar_text_unselectable=0x7f040056;
+        /**  bus calendar 
+         */
+        public static final int canlendar_text_color=0x7f04004b;
+        public static final int chat_hint=0x7f040021;
+        public static final int color_ee4136=0x7f04001c;
+        /**  6.3 
+         */
+        public static final int cor_0c4da2=0x7f04003c;
+        public static final int cor_1e82e6=0x7f04002d;
+        public static final int cor_1e83e6=0x7f040033;
+        public static final int cor_222222=0x7f04002c;
+        public static final int cor_333333=0x7f04001d;
+        public static final int cor_404040=0x7f04001e;
+        public static final int cor_49a1ec=0x7f040034;
+        public static final int cor_585858=0x7f04003e;
+        public static final int cor_585885=0x7f04003a;
+        public static final int cor_58a0f0=0x7f04002e;
+        public static final int cor_5a5a5a=0x7f040038;
+        public static final int cor_70000000=0x7f040040;
+        public static final int cor_82b46e=0x7f040035;
+        public static final int cor_888888=0x7f04002b;
+        public static final int cor_90000000=0x7f040041;
+        public static final int cor_90a3ca=0x7f04003d;
+        public static final int cor_94cd56=0x7f040024;
+        public static final int cor_98d07d=0x7f04002f;
+        public static final int cor_999999=0x7f04001f;
+        public static final int cor_c8c8c8=0x7f040029;
+        public static final int cor_cbcbcb=0x7f040039;
+        public static final int cor_cccccc=0x7f04003f;
+        public static final int cor_d73c3c=0x7f040025;
+        public static final int cor_d7d7d7=0x7f040020;
+        public static final int cor_dcdcdc=0x7f04002a;
+        /**  6.2.5 
+         */
+        public static final int cor_dddddd=0x7f040036;
+        public static final int cor_dedede=0x7f040032;
+        public static final int cor_e6e6e6=0x7f040031;
+        public static final int cor_ec4949=0x7f040023;
+        /**  6.0 
+         */
+        public static final int cor_f0aaaa=0x7f040022;
+        public static final int cor_f0f0f0=0x7f040027;
+        public static final int cor_f3f3f3=0x7f040037;
+        public static final int cor_f5f5f5=0x7f04003b;
+        public static final int cor_fafafa=0x7f040028;
+        public static final int cor_fda658=0x7f040059;
+        public static final int cor_fff8ec=0x7f040030;
+        public static final int cor_ffffff=0x7f040026;
+        /**  cc 选择上下车地点   搜索 
+         */
+        public static final int cor_search_address_tv_888888=0x7f040042;
+        public static final int divider_gray=0x7f040012;
+        public static final int divider_line=0x7f040013;
+        public static final int gray=0x7f04000c;
+        public static final int gray_dark=0x7f04000e;
+        public static final int gray_deep=0x7f040048;
+        public static final int gray_light=0x7f04000f;
+        public static final int gray_myactivity_bg=0x7f040010;
+        public static final int gray_text=0x7f040045;
+        public static final int gray_yidao=0x7f040046;
+        public static final int grayer_yidao=0x7f040047;
+        public static final int green=0x7f04000d;
+        public static final int invoic_gray=0x7f040011;
+        public static final int light_blue=0x7f040000;
+        public static final int loading_dialog_transparent_background=0x7f040009;
+        public static final int orange=0x7f040057;
+        public static final int red=0x7f04000a;
+        public static final int red_deep=0x7f040044;
+        /**  BLE color 
+         */
+        public static final int red_yidao=0x7f040043;
+        public static final int text_333333=0x7f040016;
+        public static final int text_666666=0x7f040017;
+        public static final int text_888888=0x7f040018;
+        public static final int text_999999=0x7f04001b;
+        public static final int text_gray=0x7f04001a;
+        public static final int transparent=0x7f040014;
+        public static final int transparent_75=0x7f040006;
+        public static final int transparent_all=0x7f040004;
+        public static final int transparent_background=0x7f040008;
+        public static final int transparent_gray=0x7f040007;
+        public static final int transparent_half=0x7f040005;
+        public static final int white=0x7f040001;
+        public static final int yi_bg=0x7f040015;
+    }
     public static final class drawable {
-        public static final int base_edit_input=0x7f020000;
-        public static final int common_entry_item_bg=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int ic_photo_add=0x7f020003;
-        public static final int loading_icon=0x7f020004;
+        public static final int arrow=0x7f020000;
+        public static final int base_edit_input=0x7f020001;
+        public static final int common_entry_item_bg=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int ic_photo_add=0x7f020004;
+        public static final int loading_icon=0x7f020005;
     }
     public static final class id {
-        public static final int bt_submit=0x7f060003;
-        public static final int et_name=0x7f060000;
-        public static final int et_price=0x7f060001;
-        public static final int iv_pic=0x7f060002;
-        public static final int loading_dialog_img=0x7f060005;
-        public static final int loading_dialog_layout=0x7f060004;
+        public static final int bt_submit=0x7f070007;
+        public static final int delive=0x7f07000f;
+        public static final int et_name=0x7f070004;
+        public static final int et_price=0x7f070005;
+        public static final int iv_pic=0x7f070006;
+        public static final int loading_dialog_img=0x7f070009;
+        public static final int loading_dialog_layout=0x7f070008;
+        public static final int no_order=0x7f070003;
+        public static final int order=0x7f070000;
+        public static final int orderaddress=0x7f07000c;
+        public static final int orderdetail=0x7f07000a;
+        public static final int ordername=0x7f07000b;
+        public static final int orderphonenum=0x7f07000d;
+        public static final int ordertime=0x7f07000e;
+        public static final int publish_commodity=0x7f070001;
+        public static final int xlistview_footer_content=0x7f070010;
+        public static final int xlistview_footer_hint_textview=0x7f070012;
+        public static final int xlistview_footer_progressbar=0x7f070011;
+        public static final int xlistview_header_arrow=0x7f070018;
+        public static final int xlistview_header_content=0x7f070013;
+        public static final int xlistview_header_hint_textview=0x7f070015;
+        public static final int xlistview_header_progressbar=0x7f070019;
+        public static final int xlistview_header_text=0x7f070014;
+        public static final int xlistview_header_time=0x7f070017;
+        public static final int xlistview_header_time_label=0x7f070016;
+        public static final int xlv=0x7f070002;
     }
     public static final class layout {
-        public static final int activity_publish_commodity=0x7f030000;
-        public static final int loading_dialog=0x7f030001;
+        public static final int activity_main=0x7f030000;
+        public static final int activity_orderlist=0x7f030001;
+        public static final int activity_publish_commodity=0x7f030002;
+        public static final int loading_dialog=0x7f030003;
+        public static final int myorder_item=0x7f030004;
+        public static final int xlistview_footer=0x7f030005;
+        public static final int xlistview_header=0x7f030006;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        public static final int app_name=0x7f050001;
+        public static final int hello=0x7f050000;
+        public static final int xlistview_footer_hint_normal=0x7f050006;
+        public static final int xlistview_footer_hint_ready=0x7f050007;
+        public static final int xlistview_header_hint_loading=0x7f050004;
+        public static final int xlistview_header_hint_normal=0x7f050002;
+        public static final int xlistview_header_hint_ready=0x7f050003;
+        public static final int xlistview_header_last_time=0x7f050005;
     }
     public static final class style {
         /** 
@@ -44,11 +180,11 @@ public final class R {
             backward-compatibility can go here.
         
          */
-        public static final int AppBaseTheme=0x7f050000;
+        public static final int AppBaseTheme=0x7f060000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f050001;
-        public static final int LoadingDialog=0x7f050002;
+        public static final int AppTheme=0x7f060001;
+        public static final int LoadingDialog=0x7f060002;
     }
 }
