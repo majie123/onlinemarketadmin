@@ -14,10 +14,14 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
+import android.widget.Spinner;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
@@ -36,10 +40,14 @@ public class PublishCommodityActivity extends BaseActiviity {
 	public int PICK_REQUEST_CODE = 0;
 	public int 	TAKE_PHOTO_CODE=1;
 	
+	private String [] categorys={"吃的","喝的","床上用品","用的","其他"};
+	private String category;
+	
 	private EditText etName;
 	private EditText etPrice;
 	private ImageView ivPic;
 	private Button btSubmit;
+	private Spinner categorySpinner;
 	
 	private String name;
 	private String price;
@@ -63,6 +71,11 @@ public class PublishCommodityActivity extends BaseActiviity {
 		etPrice=(EditText) findViewById(R.id.et_price);
 		ivPic=(ImageView) findViewById(R.id.iv_pic);
 		btSubmit=(Button) findViewById(R.id.bt_submit);
+		categorySpinner=(Spinner) findViewById(R.id.spinner_category);
+		
+		ArrayAdapter< String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorys);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
+		categorySpinner.setAdapter(adapter);
 
 	}
 
@@ -73,6 +86,20 @@ public class PublishCommodityActivity extends BaseActiviity {
 
 	@Override
 	public void setListeners() {
+		
+		categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				category=categorys[arg2];
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+		});
 		btSubmit.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -89,6 +116,10 @@ public class PublishCommodityActivity extends BaseActiviity {
 				}
 				if(picPath==null){
 					toastMsg("pic is null");
+					return;
+				}
+				if(category==null){
+					toastMsg("category is null");
 					return;
 				}
 				uploadFile();
@@ -118,6 +149,7 @@ public class PublishCommodityActivity extends BaseActiviity {
 				
 			}
 		});
+		
 	}
 	
 	@Override
@@ -218,6 +250,7 @@ public class PublishCommodityActivity extends BaseActiviity {
     	
     	CommodityBean p=new CommodityBean();
     	p.setName(name);
+    	p.setCategory(category);
     	p.setPrice(new Float(price));
     	p.setPics(bmobFile);
     	p.save(this, new SaveListener() {
