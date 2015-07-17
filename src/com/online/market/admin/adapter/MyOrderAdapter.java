@@ -95,7 +95,7 @@ public class MyOrderAdapter extends MyBaseAdapter {
 	private void update(final OrderBean bean){
 		ProgressUtil.showProgress(mContext, "");
 		OrderBean p=new OrderBean();
-		p.setStatus(OrderBean.STAUTS_DELIVED);
+		p.setStatus(OrderBean.STATUS_DELIVED);
 		p.setObjectId(bean.getObjectId());
 		p.update(mContext, new UpdateListener() {
 			

@@ -41,7 +41,7 @@ public class MyOrderActivity extends BaseActiviity {
 	private void queryOrders(){
 		ProgressUtil.showProgress(this, "");
 		BmobQuery<OrderBean> query	 = new BmobQuery<OrderBean>();
-		query.addWhereEqualTo("status", OrderBean.STATUS_UNDELIVED);
+		query.addWhereNotEqualTo("status", OrderBean.STATUS_DELIVED);
 //		query.setLimit(10);
 		query.findObjects(this, new FindListener<OrderBean>() {
 
