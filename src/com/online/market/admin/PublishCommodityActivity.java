@@ -36,7 +36,6 @@ public class PublishCommodityActivity extends BaseActiviity {
 	/**
 	 * SDK初始化建议放在启动页
 	 */
-	public static String APPID = "bb9c8700c4d1821c09bfebaf1ba006b1";
 	public int PICK_REQUEST_CODE = 0;
 	public int 	TAKE_PHOTO_CODE=1;
 	
@@ -81,7 +80,7 @@ public class PublishCommodityActivity extends BaseActiviity {
 
 	@Override
 	public void initData() {
-		Bmob.initialize(getApplicationContext(),APPID);
+//		Bmob.initialize(getApplicationContext(),APPID);
 	}
 
 	@Override

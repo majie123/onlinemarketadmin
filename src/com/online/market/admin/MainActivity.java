@@ -1,5 +1,6 @@
 package com.online.market.admin;
 
+import cn.bmob.v3.Bmob;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +8,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainActivity extends BaseActiviity {
-	
+	public static String APPID = "bb9c8700c4d1821c09bfebaf1ba006b1";
+
 	private Button btPublish,btOrder;
 	
 	@Override
@@ -29,7 +31,7 @@ public class MainActivity extends BaseActiviity {
 
 	@Override
 	public void initData() {
-
+		Bmob.initialize(getApplicationContext(),APPID);
 	}
 
 	@Override

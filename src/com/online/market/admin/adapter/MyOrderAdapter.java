@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.online.market.admin.R;
@@ -17,6 +16,7 @@ import com.online.market.admin.adapter.base.MyBaseAdapter;
 import com.online.market.admin.adapter.base.ViewHolder;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.bean.ShopCartaBean;
+import com.online.market.admin.util.DateUtil;
 import com.online.market.admin.util.DialogUtil;
 import com.online.market.admin.util.ProgressUtil;
 
@@ -59,7 +59,7 @@ public class MyOrderAdapter extends MyBaseAdapter {
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText(bean.getPhonenum());
-        tvOrderTime.setText("下单时间：  "+bean.getCreatedAt());
+        tvOrderTime.setText("最迟送达时间：  "+DateUtil.getDate(bean.getCreatedAt()));
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){
         	detail+=p.getName()+" X "+p.getNumber()+"\n";
@@ -103,13 +103,13 @@ public class MyOrderAdapter extends MyBaseAdapter {
 			public void onSuccess() {
 				orderBeans.remove(bean);
 				notifyDataSetChanged();
-				ShowToast("success");
+				ShowToast("成功");
 				ProgressUtil.closeProgress();
 			}
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				ShowToast("fail "+arg1);
+				ShowToast("失败 "+arg1);
 				ProgressUtil.closeProgress();
 
 			}
