@@ -14,7 +14,6 @@ import com.online.market.admin.util.ProgressUtil;
 public class LoginActivity extends BaseActivity {
 	private EditText username, userpsw;
 	private Button signin;
-//	private TextView register;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +54,7 @@ public class LoginActivity extends BaseActivity {
 				toastMsg(bu.getUsername() + "登陆成功");
 				ProgressUtil.closeProgress();
 				startActivity(MainActivity.class);
+				finish();
 			}
 
 			@Override
@@ -75,7 +75,7 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		
+
 	}
 	
 }

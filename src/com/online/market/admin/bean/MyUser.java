@@ -4,14 +4,19 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 
 public class MyUser extends BmobUser {
-	/**
-	 * 
-	 */
+	/**超级用户*/
+	public static int GROUP_ROOT=2;
+	/**管理用户*/
+	public static int GROUP_ADMIN=1;
+	/**普通用户*/
+	public static int GROUP_USER=0;
+	
 	private static final long serialVersionUID = 1L;
 	private String nickname;
 	private Boolean gender;
 	private BmobFile avatar;
 	private int age;
+	private int group;
 	
 	public BmobFile getAvatar() {
 		return avatar;
@@ -36,6 +41,12 @@ public class MyUser extends BmobUser {
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+	public int getGroup() {
+		return group;
+	}
+	public void setGroup(int group) {
+		this.group = group;
 	}
 	
 }
