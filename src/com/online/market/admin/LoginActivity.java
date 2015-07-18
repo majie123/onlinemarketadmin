@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.SaveListener;
 
 import com.online.market.admin.bean.MyUser;
@@ -51,10 +52,16 @@ public class LoginActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
-				toastMsg(bu.getUsername() + "登陆成功");
 				ProgressUtil.closeProgress();
-				startActivity(MainActivity.class);
-				finish();
+				MyUser user=BmobUser.getCurrentUser(getApplicationContext(), MyUser.class);
+				if(user.getGroup()==MyUser.GROUP_USER){
+					toastMsg("普通用户不能登录系统");
+					BmobUser.logOut(getApplicationContext());
+				}else{
+					toastMsg(bu.getUsername() + "登陆成功");
+					startActivity(MainActivity.class);
+					finish();
+				}
 			}
 
 			@Override
