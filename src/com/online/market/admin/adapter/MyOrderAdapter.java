@@ -21,11 +21,17 @@ import com.online.market.admin.util.DialogUtil;
 import com.online.market.admin.util.ProgressUtil;
 
 public class MyOrderAdapter extends MyBaseAdapter {
-	private List<OrderBean > orderBeans;
+	public static final int ORDER_UNTREATED=0;
+	public static final int ORDER_COMPLETED=1;
+	public static final int ORDER_NEW=2;
 
-	public MyOrderAdapter(Context context,List<OrderBean > orderBeans) {
+	private List<OrderBean > orderBeans;
+	private int orderType=0;
+
+	public MyOrderAdapter(Context context,List<OrderBean > orderBeans,int orderType) {
 		super(context);
 		this.orderBeans=orderBeans;
+		this.orderType=orderType;
 	}
 
 	@Override
@@ -54,6 +60,10 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
 		TextView tvOrderTime=ViewHolder.get(convertView, R.id.ordertime);
 		Button btDelive=ViewHolder.get(convertView, R.id.delive);
+		
+		if(orderType==ORDER_COMPLETED){
+			btDelive.setVisibility(View.GONE);
+		}
 		
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());

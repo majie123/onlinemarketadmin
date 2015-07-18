@@ -1,11 +1,12 @@
 package com.online.market.admin;
 
-import cn.bmob.v3.Bmob;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import cn.bmob.v3.Bmob;
 
 public class MainActivity extends BaseActiviity {
 	public static String APPID = "bb9c8700c4d1821c09bfebaf1ba006b1";
@@ -32,6 +33,10 @@ public class MainActivity extends BaseActiviity {
 	@Override
 	public void initData() {
 		Bmob.initialize(getApplicationContext(),APPID);
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+//		startService(new Intent(this, NewOrderService.class));
+        
 	}
 
 	@Override
@@ -49,9 +54,10 @@ public class MainActivity extends BaseActiviity {
 			
 			@Override
 			public void onClick(View arg0) {
-				startActivity(new Intent(MainActivity.this, MyOrderActivity.class));
+				startActivity(new Intent(MainActivity.this, OrderActivity.class));
 			}
 		});
 	}
+
 
 }
