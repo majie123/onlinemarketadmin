@@ -5,11 +5,12 @@ import java.io.File;
 import com.online.market.admin.util.FileUtils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public abstract class BaseActiviity extends Activity {
+public abstract class BaseActivity extends Activity {
 	
 	protected String dir;
 	
@@ -36,6 +37,28 @@ public abstract class BaseActiviity extends Activity {
 	/** toast **/
 	public void toastMsg(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+	}
+	
+	/**
+	 * 跳转
+	 * @param c
+	 */
+	protected void startActivity(Class c) {
+		startActivity(c, null);
+	}
+	
+	/**
+	 * 跳转
+	 * @param c
+	 * @param extras
+	 */
+	protected void startActivity(Class c, Bundle extras) {
+		Intent intent = new Intent();
+		intent.setClass(this, c);
+		if (null != extras) {
+			intent.putExtras(extras);
+		}
+		startActivity(intent);
 	}
 
 }

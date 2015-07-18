@@ -32,7 +32,7 @@ import com.online.market.admin.util.BitmapUtil;
 import com.online.market.admin.util.DialogUtil;
 import com.online.market.admin.util.ProgressUtil;
 
-public class PublishCommodityActivity extends BaseActiviity {
+public class PublishCommodityActivity extends BaseActivity {
 	/**
 	 * SDK初始化建议放在启动页
 	 */

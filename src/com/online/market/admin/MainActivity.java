@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import cn.bmob.v3.Bmob;
 
-public class MainActivity extends BaseActiviity {
+public class MainActivity extends BaseActivity {
 	public static String APPID = "bb9c8700c4d1821c09bfebaf1ba006b1";
 
 	private Button btPublish,btOrder;

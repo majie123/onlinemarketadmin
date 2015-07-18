@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class OrderActivity extends BaseActiviity {
+public class OrderActivity extends BaseActivity {
 	private UntreatedOrderFragment utFragment;
 	private CompletedFragment cmFragment;
 	private Button btNewOrder,btUntreated,btCompleted;
