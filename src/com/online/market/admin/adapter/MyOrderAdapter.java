@@ -63,13 +63,19 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		
 		if(orderType==ORDER_COMPLETED){
 			btDelive.setVisibility(View.GONE);
+			tvOrderTime.setVisibility(View.GONE);
 		}
 		
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText(bean.getPhonenum());
-        tvOrderTime.setText("最迟送达时间：  "+DateUtil.getDate(bean.getCreatedAt()));
+        String time=DateUtil.getDate(bean.getCreatedAt());
+        if(time!=null){
+        	tvOrderTime.setText("需在 "+time+" 之内送达");
+        }else{
+        	tvOrderTime.setText("订单已超时");
+        }
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){
         	detail+=p.getName()+" X "+p.getNumber()+"\n";

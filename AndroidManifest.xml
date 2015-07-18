@@ -29,7 +29,7 @@
         
         <activity android:name=".PublishCommodityActivity"></activity>
         <activity android:name=".SettingActivity"></activity>
-        <service android:name=".servie.NewOrderService"></service>
+        <service android:name=".servie.CountService"></service>
     </application>
 
 </manifest>

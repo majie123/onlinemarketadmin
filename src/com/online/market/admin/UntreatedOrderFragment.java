@@ -3,6 +3,10 @@ package com.online.market.admin;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +30,13 @@ public class UntreatedOrderFragment extends BaseFragment {
 	private XListView xlv;
 	private List<OrderBean> orders=new ArrayList<OrderBean>();
 	private TextView tvNoOrder;
+	private MyOrderAdapter adapter;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		registerReceiver();
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +52,12 @@ public class UntreatedOrderFragment extends BaseFragment {
 	public void initData() {
 
 		queryOrders();
+		
+	}
+	
+	private void registerReceiver(){
+		IntentFilter filter=new IntentFilter("intent_count");
+		getActivity().registerReceiver(receiver, filter);
 	}
 
 	
@@ -74,7 +91,7 @@ public class UntreatedOrderFragment extends BaseFragment {
 		if(orders.size()==0){
 			tvNoOrder.setVisibility(View.VISIBLE);
 		}
-		MyOrderAdapter adapter=new MyOrderAdapter(getActivity(), orders,MyOrderAdapter.ORDER_UNTREATED);
+		adapter=new MyOrderAdapter(getActivity(), orders,MyOrderAdapter.ORDER_UNTREATED);
 		xlv.setAdapter(adapter);
 	}
 
@@ -101,5 +118,28 @@ public class UntreatedOrderFragment extends BaseFragment {
 			}
 		});
 	}
+	
+	private BroadcastReceiver receiver=new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context arg0, Intent intent) {
+			if(intent.getAction().equals("intent_count")){
+				int count=intent.getIntExtra("count", -1);
+				//每30秒刷新一次
+				if(count%120==0){
+					orders.clear();
+					queryOrders();
+				}
+				if(count%10==0){
+					adapter.notifyDataSetChanged();
+				}
+			}
+		}
+	};
+	
+	public void onDestroy() {
+		super.onDestroy();
+		getActivity().unregisterReceiver(receiver);
+	};
 
 }

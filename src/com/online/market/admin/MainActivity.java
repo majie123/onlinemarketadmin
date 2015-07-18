@@ -1,8 +1,11 @@
 package com.online.market.admin;
 
+import com.online.market.admin.servie.CountService;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,6 +54,8 @@ public class MainActivity extends BaseActivity {
 		initLastBt(btUntreated);
 		utFragment=new UntreatedOrderFragment();
 		replaceFragment(utFragment);
+		
+		startService(new Intent(this, CountService.class));
 	}
 
 	@Override
