@@ -3,9 +3,13 @@ package com.online.market.admin.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -54,27 +58,27 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
 		tvOrderTime=ViewHolder.get(convertView, R.id.ordertime);
 		btDelive=ViewHolder.get(convertView, R.id.delive);
-		
-//		if(orderType==ORDER_COMPLETED){
-//			btDelive.setVisibility(View.GONE);
-//			tvOrderTime.setVisibility(View.GONE);
-//		}
+		ImageView ivCall=ViewHolder.get(convertView, R.id.iv_call);
 		
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText(bean.getPhonenum());
         String time=DateUtil.getDate(bean.getCreatedAt());
-//        if(time!=null){
-        	tvOrderTime.setText(time);
-//        }else{
-//        	tvOrderTime.setText("订单已超时");
-//        }
+        tvOrderTime.setText(time);
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){
         	detail+=p.getName()+" X "+p.getNumber()+"\n";
         }
     	tvOrderDetail.setText("商品： "+detail);
+    	ivCall.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+bean.getPhonenum()));  
+                mContext.startActivity(intent); 
+			}
+		});
     	
     	action(bean);
     	

@@ -16,9 +16,8 @@ public class DateUtil {
 			long currentTime=currentDate.getTime();
 			long time=date.getTime()-currentTime;
 			if(time<0){
-				SimpleDateFormat f=new SimpleDateFormat("订单已超时 HH小时mm分");
-				date.setTime(-time);
-				return f.format(date);
+				
+				return "订单已超时 下单时间 "+str;
 			}else{
 				date.setTime(time);
 				SimpleDateFormat f=new SimpleDateFormat("需在 mm分ss秒 之内送达");
