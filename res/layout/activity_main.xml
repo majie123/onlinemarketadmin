@@ -48,19 +48,25 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/bt_neworder"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="新订单"
-            android:visibility="gone" />
-
-        <Button
             android:id="@+id/bt_untreatedorder"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="未处理" />
+        
+        <Button
+            android:id="@+id/bt_packedorder"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="已打包" />
+        
+        <Button
+            android:id="@+id/bt_departedorder"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="已出发" />
 
         <Button
             android:id="@+id/bt_completedorder"

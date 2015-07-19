@@ -3,9 +3,7 @@ package com.online.market.admin.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,21 +15,22 @@ import com.online.market.admin.adapter.base.ViewHolder;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.bean.ShopCartaBean;
 import com.online.market.admin.util.DateUtil;
-import com.online.market.admin.util.DialogUtil;
 import com.online.market.admin.util.ProgressUtil;
 
-public class MyOrderAdapter extends MyBaseAdapter {
-	public static final int ORDER_UNTREATED=0;
-	public static final int ORDER_COMPLETED=1;
-	public static final int ORDER_NEW=2;
+public abstract class BaseOrderAdapter extends MyBaseAdapter {
 
 	private List<OrderBean > orderBeans;
-	private int orderType=0;
+//	private int orderType=0;
+//	protected TextView tvOrderDetail;
+//	protected TextView tvOrderName;
+//	protected TextView tvOrderAddress;
+//	protected TextView tvOrderPhonenum;
+	protected TextView tvOrderTime;
+	protected Button btDelive;
 
-	public MyOrderAdapter(Context context,List<OrderBean > orderBeans,int orderType) {
+	public BaseOrderAdapter(Context context,List<OrderBean > orderBeans) {
 		super(context);
 		this.orderBeans=orderBeans;
-		this.orderType=orderType;
 	}
 
 	@Override
@@ -58,13 +57,13 @@ public class MyOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderName=ViewHolder.get(convertView, R.id.ordername);
 		TextView tvOrderAddress=ViewHolder.get(convertView, R.id.orderaddress);
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
-		TextView tvOrderTime=ViewHolder.get(convertView, R.id.ordertime);
-		Button btDelive=ViewHolder.get(convertView, R.id.delive);
+		tvOrderTime=ViewHolder.get(convertView, R.id.ordertime);
+		btDelive=ViewHolder.get(convertView, R.id.delive);
 		
-		if(orderType==ORDER_COMPLETED){
-			btDelive.setVisibility(View.GONE);
-			tvOrderTime.setVisibility(View.GONE);
-		}
+//		if(orderType==ORDER_COMPLETED){
+//			btDelive.setVisibility(View.GONE);
+//			tvOrderTime.setVisibility(View.GONE);
+//		}
 		
 		final OrderBean bean=orderBeans.get(arg0);
         tvOrderName.setText("收货人： "+bean.getReceiver());
@@ -82,36 +81,19 @@ public class MyOrderAdapter extends MyBaseAdapter {
         }
     	tvOrderDetail.setText("商品： "+detail);
     	
-    	btDelive.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				DialogUtil.dialog(mContext, "你确认已经送达了吗？", "确认", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int arg1) {
-						update(bean);
-						dialog.dismiss();
-					}
-				}, "取消", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int arg1) {
-						dialog.dismiss();
-
-					}
-				});
-				
-			}
-		});
-
+    	action(bean);
+    	
 		return convertView;
 	}
 	
-	private void update(final OrderBean bean){
+	/**getview中的抽象方法*/
+	protected abstract void action(final OrderBean bean);
+	
+	/**更新order的状态*/
+	protected void update(final OrderBean bean,int state){
 		ProgressUtil.showProgress(mContext, "");
 		OrderBean p=new OrderBean();
-		p.setStatus(OrderBean.STATUS_DELIVED);
+		p.setState(state);
 		p.setObjectId(bean.getObjectId());
 		p.update(mContext, new UpdateListener() {
 			

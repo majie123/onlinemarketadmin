@@ -1,4 +1,4 @@
-package com.online.market.admin;
+package com.online.market.admin.fragment.base;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +11,21 @@ import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
-import com.online.market.admin.adapter.MyOrderAdapter;
+import com.online.market.admin.BaseFragment;
+import com.online.market.admin.R;
+import com.online.market.admin.adapter.BaseOrderAdapter;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.util.ProgressUtil;
 import com.online.market.admin.view.xlist.XListView;
 import com.online.market.admin.view.xlist.XListView.IXListViewListener;
 
-public class CompletedFragment extends BaseFragment {
+public abstract class BaseOrderFragment extends BaseFragment {
 
 	private View view;
 	private XListView xlv;
-	private List<OrderBean> orders=new ArrayList<OrderBean>();
+	protected List<OrderBean> orders=new ArrayList<OrderBean>();
 	private TextView tvNoOrder;
+	protected BaseOrderAdapter adapter;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,8 +47,9 @@ public class CompletedFragment extends BaseFragment {
 	private void queryOrders(){
 		ProgressUtil.showProgress(getActivity(), "");
 		BmobQuery<OrderBean> query	 = new BmobQuery<OrderBean>();
-		query.addWhereEqualTo("status", OrderBean.STATUS_DELIVED);
-//		query.setLimit(10);
+//		query.addWhereEqualTo("state", OrderBean.STATE_DELIVED);
+		setBmobQueryCondition(query);
+		query.setLimit(10);
 		query.findObjects(getActivity(), new FindListener<OrderBean>() {
 
 			@Override
@@ -60,20 +64,24 @@ public class CompletedFragment extends BaseFragment {
 			@Override
 			public void onError(int code, String msg) {
 				ProgressUtil.closeProgress();
-				toastMsg("net fail");
+				toastMsg(msg);
 				xlv.stopRefresh();
 			}
 		});	
-		
 	}
+	
+	protected abstract void setBmobQueryCondition(BmobQuery<OrderBean> query);
 	
 	private void setData(){
 		if(orders.size()==0){
 			tvNoOrder.setVisibility(View.VISIBLE);
 		}
-		MyOrderAdapter adapter=new MyOrderAdapter(getActivity(), orders,MyOrderAdapter.ORDER_COMPLETED);
+//		adapter=new CompletedOrderAdapter(getActivity(), orders);
+		initAdapter();
 		xlv.setAdapter(adapter);
 	}
+	
+	protected abstract void initAdapter();
 
 	@Override
 	public void initViews() {
