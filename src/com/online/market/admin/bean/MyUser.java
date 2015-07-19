@@ -5,9 +5,11 @@ import cn.bmob.v3.datatype.BmobFile;
 
 public class MyUser extends BmobUser {
 	/**超级用户*/
-	public static int GROUP_ROOT=2;
-	/**管理用户*/
-	public static int GROUP_ADMIN=1;
+	public static int GROUP_ROOT=3;
+	/**打包者*/
+	public static int GROUP_PACKER=2;
+	/**配送者*/
+	public static int GROUP_DISPATCHER=1;
 	/**普通用户*/
 	public static int GROUP_USER=0;
 	

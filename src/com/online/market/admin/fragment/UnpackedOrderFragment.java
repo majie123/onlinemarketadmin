@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import cn.bmob.v3.BmobQuery;
 
-import com.online.market.admin.adapter.UntreatedOrderAdapter;
+import com.online.market.admin.adapter.UnpackedOrderAdapter;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.fragment.base.BaseOrderFragment;
 /***
@@ -15,7 +15,7 @@ import com.online.market.admin.fragment.base.BaseOrderFragment;
  * @author majie
  *
  */
-public class UntreatedOrderFragment extends BaseOrderFragment {
+public class UnpackedOrderFragment extends BaseOrderFragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class UntreatedOrderFragment extends BaseOrderFragment {
 
 	@Override
 	protected void initAdapter() {
-		adapter=new UntreatedOrderAdapter(getActivity(), orders);
+		adapter=new UnpackedOrderAdapter(getActivity(), orders);
 	};
 
 }

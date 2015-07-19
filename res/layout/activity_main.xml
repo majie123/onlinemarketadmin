@@ -48,11 +48,11 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/bt_untreatedorder"
+            android:id="@+id/bt_unpackedorder"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="未处理" />
+            android:text="未打包" />
         
         <Button
             android:id="@+id/bt_packedorder"

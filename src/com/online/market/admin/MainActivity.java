@@ -10,10 +10,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import cn.bmob.v3.Bmob;
 
+import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.fragment.CompletedOrderFragment;
 import com.online.market.admin.fragment.DepartedOrderFragment;
 import com.online.market.admin.fragment.PackedOrderFragment;
-import com.online.market.admin.fragment.UntreatedOrderFragment;
+import com.online.market.admin.fragment.UnpackedOrderFragment;
 import com.online.market.admin.fragment.base.BaseOrderFragment;
 import com.online.market.admin.servie.CountService;
 
@@ -25,7 +26,7 @@ public class MainActivity extends BaseActivity {
 	private BaseOrderFragment paFragment;
 	private BaseOrderFragment dpFragment;
 
-	private Button btPacked,btUntreated,btCompleted,btDeparted;
+	private Button btUnPacked,btPacked,btCompleted,btDeparted;
 	private Button btSet;
 	private Button lastBt;
 	
@@ -43,10 +44,10 @@ public class MainActivity extends BaseActivity {
 	public void initViews() {
 
 		btPacked=(Button) findViewById(R.id.bt_packedorder);
-		btUntreated=(Button) findViewById(R.id.bt_untreatedorder);
+		btUnPacked=(Button) findViewById(R.id.bt_unpackedorder);
 		btCompleted=(Button) findViewById(R.id.bt_completedorder);
 		btDeparted=(Button) findViewById(R.id.bt_departedorder);
-
+		
 		btSet=(Button) findViewById(R.id.bt_set);
 
 	}
@@ -60,9 +61,22 @@ public class MainActivity extends BaseActivity {
 			return;
 		}
 
-		initLastBt(btUntreated);
-		utFragment=new UntreatedOrderFragment();
-		replaceFragment(utFragment);
+		if(user.getGroup()==MyUser.GROUP_PACKER){
+			btPacked.setVisibility(View.GONE);
+			btDeparted.setVisibility(View.GONE);
+			
+			initLastBt(btUnPacked);
+			utFragment=new UnpackedOrderFragment();
+			replaceFragment(utFragment);
+			
+		}else if(user.getGroup()==MyUser.GROUP_DISPATCHER){
+			btUnPacked.setVisibility(View.GONE);
+			
+			initLastBt(btPacked);
+			paFragment=new PackedOrderFragment();
+			replaceFragment(paFragment);
+			
+		}
 		
 		startService(new Intent(this, CountService.class));
 	}
@@ -94,14 +108,14 @@ public class MainActivity extends BaseActivity {
 			}
 		});
 		
-        btUntreated.setOnClickListener(new OnClickListener() {
+        btUnPacked.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 //				if(utFragment==null){
-					utFragment=new UntreatedOrderFragment();
+					utFragment=new UnpackedOrderFragment();
 //				}
-				initLastBt(btUntreated);
+				initLastBt(btUnPacked);
 				replaceFragment(utFragment);
 			}
 		});

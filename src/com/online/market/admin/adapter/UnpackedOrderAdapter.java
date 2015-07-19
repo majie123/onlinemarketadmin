@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.util.DialogUtil;
 
-public class UntreatedOrderAdapter extends BaseOrderAdapter {
+public class UnpackedOrderAdapter extends BaseOrderAdapter {
 
-	public UntreatedOrderAdapter(Context context, List<OrderBean> orderBeans) {
+	public UnpackedOrderAdapter(Context context, List<OrderBean> orderBeans) {
 		super(context, orderBeans);
 	}
 	

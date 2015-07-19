@@ -20,22 +20,16 @@ public class CompletedOrderAdapter extends BaseOrderAdapter {
 	@Override
 	protected void action(final OrderBean bean) {
 		tvOrderTime.setVisibility(View.GONE);
-		btDelive.setText("标记为未处理");
+		btDelive.setText("标记为");
 		btDelive.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				DialogUtil.dialog(mContext, "你确认要标记为未处理吗？", "确认", new DialogInterface.OnClickListener() {
+				DialogUtil.dialog(mContext, "标记为", new String []{"未打包","已打包","已出发","已送达"}, new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int arg1) {
-						update(bean,OrderBean.STATE_UNTREATED);
-						dialog.dismiss();
-					}
-				}, "取消", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int arg1) {
+						update(bean, arg1);
 						dialog.dismiss();
 
 					}
