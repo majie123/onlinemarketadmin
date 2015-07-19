@@ -35,7 +35,7 @@ public class SettingActivity extends BaseActivity {
 	@Override
 	public void initData() {
 
-		if(user.getGroup()==MyUser.GROUP_PACKER){
+		if(user.getGroup()!=MyUser.GROUP_ROOT){
 			btPublish.setVisibility(View.GONE);
 		}
 	}

@@ -20,11 +20,6 @@ import com.online.market.admin.util.ProgressUtil;
 public abstract class BaseOrderAdapter extends MyBaseAdapter {
 
 	private List<OrderBean > orderBeans;
-//	private int orderType=0;
-//	protected TextView tvOrderDetail;
-//	protected TextView tvOrderName;
-//	protected TextView tvOrderAddress;
-//	protected TextView tvOrderPhonenum;
 	protected TextView tvOrderTime;
 	protected Button btDelive;
 
@@ -70,11 +65,11 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText(bean.getPhonenum());
         String time=DateUtil.getDate(bean.getCreatedAt());
-        if(time!=null){
-        	tvOrderTime.setText("需在 "+time+" 之内送达");
-        }else{
-        	tvOrderTime.setText("订单已超时");
-        }
+//        if(time!=null){
+        	tvOrderTime.setText(time);
+//        }else{
+//        	tvOrderTime.setText("订单已超时");
+//        }
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){
         	detail+=p.getName()+" X "+p.getNumber()+"\n";

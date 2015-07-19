@@ -16,11 +16,14 @@ public class DateUtil {
 			long currentTime=currentDate.getTime();
 			long time=date.getTime()-currentTime;
 			if(time<0){
-				return null;
+				SimpleDateFormat f=new SimpleDateFormat("订单已超时 HH小时mm分");
+				date.setTime(-time);
+				return f.format(date);
+			}else{
+				date.setTime(time);
+				SimpleDateFormat f=new SimpleDateFormat("需在 mm分ss秒 之内送达");
+				return f.format(date);
 			}
-			date.setTime(time);
-			SimpleDateFormat f=new SimpleDateFormat("mm分ss秒");
-			return f.format(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
