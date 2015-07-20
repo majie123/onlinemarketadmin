@@ -48,12 +48,23 @@
         android:text="手机号:15811490155"
         android:textColor="@color/black"
         android:textSize="20sp" />
+    
+    <TextView
+        android:id="@+id/orderpaymethod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/orderphonenum"
+        android:layout_margin="0dp"
+        android:layout_marginTop="10dp"
+        android:text="在线已支付"
+        android:textColor="@color/ble_blue"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/ordertime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/orderphonenum"
+        android:layout_below="@+id/orderpaymethod"
         android:layout_margin="0dp"
         android:layout_marginTop="10dp"
         android:text="配送中..."

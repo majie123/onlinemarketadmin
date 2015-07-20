@@ -59,6 +59,7 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderName=ViewHolder.get(convertView, R.id.ordername);
 		TextView tvOrderAddress=ViewHolder.get(convertView, R.id.orderaddress);
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
+		TextView tvOrderPaymethod=ViewHolder.get(convertView, R.id.orderpaymethod);
 		tvOrderTime=ViewHolder.get(convertView, R.id.ordertime);
 		btDelive=ViewHolder.get(convertView, R.id.delive);
 		ImageView ivCall=ViewHolder.get(convertView, R.id.iv_call);
@@ -67,7 +68,13 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText(bean.getPhonenum());
-        String time=DateUtil.getDate(bean.getCreatedAt());
+        if(bean.getPayMethod()==OrderBean.PAYMETHOD_PAYFAILED){
+        	tvOrderPaymethod.setText("付款失败");
+        }else if(bean.getPayMethod()==OrderBean.PAYMETHOD_CASHONDELIVEY){
+        	tvOrderPaymethod.setText("货到付款：需支付 "+bean.getPrice()+" 元");
+        }else {
+        	tvOrderPaymethod.setText("在线已支付");
+        }        String time=DateUtil.getDate(bean.getCreatedAt());
         tvOrderTime.setText(time);
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){

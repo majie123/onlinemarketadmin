@@ -5,6 +5,7 @@ import java.util.List;
 import com.online.market.admin.adapter.NewOrderAdapter;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.util.SoundUtil;
+import com.online.market.admin.util.VibratorUtil;
 import com.online.market.admin.view.xlist.XListView;
 
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class NewOrderActivity extends BaseActivity {
 
 		btIgnore=(Button) findViewById(R.id.bt_ignore);
 		xlv=(XListView) findViewById(R.id.xlv);
+		xlv.setPullRefreshEnable(false);
 	}
 
 	@Override
@@ -46,6 +48,7 @@ public class NewOrderActivity extends BaseActivity {
 		NewOrderAdapter adapter=new NewOrderAdapter(this, orders);
 		xlv.setAdapter(adapter);
 		
+		VibratorUtil.vibra(this);
 		SoundUtil.soundRing(this);
 	}
 
