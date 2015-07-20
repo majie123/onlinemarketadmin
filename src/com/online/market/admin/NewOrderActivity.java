@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.online.market.admin.adapter.NewOrderAdapter;
 import com.online.market.admin.bean.OrderBean;
+import com.online.market.admin.util.SoundUtil;
 import com.online.market.admin.view.xlist.XListView;
 
 import android.os.Bundle;
@@ -44,6 +45,8 @@ public class NewOrderActivity extends BaseActivity {
 		}
 		NewOrderAdapter adapter=new NewOrderAdapter(this, orders);
 		xlv.setAdapter(adapter);
+		
+		SoundUtil.soundRing(this);
 	}
 
 	@Override

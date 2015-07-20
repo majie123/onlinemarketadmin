@@ -96,9 +96,14 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 		OrderBean p=new OrderBean();
 		if(field==FIELD_PACKER){
 			p.setPacker(value);
+			p.setDispatcher(bean.getDispatcher());
 		}else if(field==FIELD_DISPATCHER){
 			p.setDispatcher(value);
+			p.setPacker(bean.getPacker());
 		}
+		p.setPayMethod(bean.getPayMethod());
+		p.setState(bean.getState());
+		p.setPrice(bean.getPrice());
 		p.setObjectId(bean.getObjectId());
 		p.update(mContext, new UpdateListener() {
 			
@@ -123,7 +128,11 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 	protected void update(final OrderBean bean,int state){
 		ProgressUtil.showProgress(mContext, "");
 		OrderBean p=new OrderBean();
+		p.setDispatcher(bean.getDispatcher());
+		p.setPacker(bean.getPacker());
+		p.setPayMethod(bean.getPayMethod());
 		p.setState(state);
+		p.setPrice(bean.getPrice());
 		p.setObjectId(bean.getObjectId());
 		p.update(mContext, new UpdateListener() {
 			
