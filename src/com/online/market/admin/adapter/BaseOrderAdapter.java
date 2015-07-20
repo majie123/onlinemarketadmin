@@ -22,6 +22,9 @@ import com.online.market.admin.util.DateUtil;
 import com.online.market.admin.util.ProgressUtil;
 
 public abstract class BaseOrderAdapter extends MyBaseAdapter {
+//	public static final int FIELD_STATE=0;
+	public static int FIELD_PACKER=1;
+	public static int FIELD_DISPATCHER=2;
 
 	private List<OrderBean > orderBeans;
 	protected TextView tvOrderTime;
@@ -87,6 +90,34 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 	
 	/**getview中的抽象方法*/
 	protected abstract void action(final OrderBean bean);
+	
+	protected void update(final OrderBean bean,int field,String value){
+		ProgressUtil.showProgress(mContext, "");
+		OrderBean p=new OrderBean();
+		if(field==FIELD_PACKER){
+			p.setPacker(value);
+		}else if(field==FIELD_DISPATCHER){
+			p.setDispatcher(value);
+		}
+		p.setObjectId(bean.getObjectId());
+		p.update(mContext, new UpdateListener() {
+			
+			@Override
+			public void onSuccess() {
+				orderBeans.remove(bean);
+				notifyDataSetChanged();
+				ShowToast("成功");
+				ProgressUtil.closeProgress();
+			}
+			
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				ShowToast("失败 "+arg1);
+				ProgressUtil.closeProgress();
+
+			}
+		});
+	}
 	
 	/**更新order的状态*/
 	protected void update(final OrderBean bean,int state){

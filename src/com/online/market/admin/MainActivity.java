@@ -16,7 +16,7 @@ import com.online.market.admin.fragment.DepartedOrderFragment;
 import com.online.market.admin.fragment.PackedOrderFragment;
 import com.online.market.admin.fragment.UnpackedOrderFragment;
 import com.online.market.admin.fragment.base.BaseOrderFragment;
-import com.online.market.admin.servie.CountService;
+import com.online.market.admin.servie.HeartService;
 import com.testin.agent.TestinAgent;
 
 public class MainActivity extends BaseActivity {
@@ -81,7 +81,9 @@ public class MainActivity extends BaseActivity {
 			
 		}
 		
-		startService(new Intent(this, CountService.class));
+		if(user.getGroup()!=MyUser.GROUP_ROOT){
+			startService(new Intent(this, HeartService.class));
+		}
 	}
 
 	@Override

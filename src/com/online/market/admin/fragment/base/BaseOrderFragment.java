@@ -3,6 +3,10 @@ package com.online.market.admin.fragment.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +18,7 @@ import cn.bmob.v3.listener.FindListener;
 import com.online.market.admin.BaseFragment;
 import com.online.market.admin.R;
 import com.online.market.admin.adapter.BaseOrderAdapter;
+import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.util.ProgressUtil;
 import com.online.market.admin.view.xlist.XListView;
@@ -46,8 +51,12 @@ public abstract class BaseOrderFragment extends BaseFragment {
 	
 	private void queryOrders(){
 		ProgressUtil.showProgress(getActivity(), "");
-		BmobQuery<OrderBean> query	 = new BmobQuery<OrderBean>();
-//		query.addWhereEqualTo("state", OrderBean.STATE_DELIVED);
+		BmobQuery<OrderBean> query	= new BmobQuery<OrderBean>();
+		if(user.getGroup()==MyUser.GROUP_PACKER){
+			query.addWhereEqualTo("packer", user.getUsername());
+		}else if(user.getGroup()==MyUser.GROUP_DISPATCHER){
+			query.addWhereEqualTo("dispatcher", user.getUsername());
+		}
 		setBmobQueryCondition(query);
 		query.setLimit(10);
 		query.findObjects(getActivity(), new FindListener<OrderBean>() {
@@ -76,7 +85,6 @@ public abstract class BaseOrderFragment extends BaseFragment {
 		if(orders.size()==0){
 			tvNoOrder.setVisibility(View.VISIBLE);
 		}
-//		adapter=new CompletedOrderAdapter(getActivity(), orders);
 		initAdapter();
 		xlv.setAdapter(adapter);
 	}
@@ -106,6 +114,37 @@ public abstract class BaseOrderFragment extends BaseFragment {
 			}
 		});
 	}
-
+    
+	private BroadcastReceiver receiver=new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context arg0, Intent intent) {
+			if(intent.getAction().equals("intent_count")){
+				int count=intent.getIntExtra("count", -1);
+				//每30秒刷新一次
+				if(count%10==0){
+					adapter.notifyDataSetChanged();
+				}
+			}
+		}
+	};
+	
+	private void registerReceiver(){
+		IntentFilter filter=new IntentFilter("intent_count");
+		getActivity().registerReceiver(receiver, filter);
+	}
+	
+	public void onPause() {
+		super.onDestroy();
+		if(receiver!=null){
+			getActivity().unregisterReceiver(receiver);
+		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		registerReceiver();
+	}
 
 }
