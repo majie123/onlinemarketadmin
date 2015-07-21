@@ -93,7 +93,7 @@ public class HeartService extends Service {
 		BmobQuery<OrderBean> query	 = new BmobQuery<OrderBean>();
 		if(user.getGroup()==MyUser.GROUP_PACKER){
 			query.addWhereEqualTo("packer", "untreated");
-		}else{
+		}else if(user.getGroup()==MyUser.GROUP_DISPATCHER){
 			query.addWhereEqualTo("dispatcher", "untreated");
 		}
 		query.addWhereNotEqualTo("state", OrderBean.STATE_DELIVED);
