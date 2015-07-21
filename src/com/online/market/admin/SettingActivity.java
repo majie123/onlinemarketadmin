@@ -1,6 +1,7 @@
 package com.online.market.admin;
 
 import com.online.market.admin.bean.MyUser;
+import com.online.market.admin.servie.HeartService;
 import com.online.market.admin.util.DialogUtil;
 
 import cn.bmob.v3.BmobUser;
@@ -61,6 +62,8 @@ public class SettingActivity extends BaseActivity {
 					public void onClick(DialogInterface arg0, int arg1) {
 						BmobUser.logOut(SettingActivity.this);
 						startActivity(LoginActivity.class);
+						//终止掉轮询进程
+						stopService(new Intent(SettingActivity.this, HeartService.class));
 						finish();
 						arg0.dismiss();
 					}

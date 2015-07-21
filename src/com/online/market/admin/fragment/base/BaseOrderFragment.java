@@ -122,7 +122,7 @@ public abstract class BaseOrderFragment extends BaseFragment {
 			if(intent.getAction().equals("intent_count")){
 				int count=intent.getIntExtra("count", -1);
 				//每30秒刷新一次
-				if(count%10==0){
+				if(count%10==0&&adapter!=null){
 					adapter.notifyDataSetChanged();
 				}
 			}
