@@ -3,6 +3,8 @@ package com.online.market.admin.servie;
 import java.io.Serializable;
 import java.util.List;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,7 +15,9 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
 
+import com.online.market.admin.MainActivity;
 import com.online.market.admin.NewOrderActivity;
+import com.online.market.admin.R;
 import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.bean.OrderBean;
 
@@ -28,6 +32,13 @@ public class HeartService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Notification notification = new Notification(R.drawable.ic_launcher,  
+		getString(R.string.app_name), System.currentTimeMillis());  
+		 PendingIntent pendingintent = PendingIntent.getActivity(this, 0,  
+				 new Intent(this, MainActivity.class), 0);  
+		 notification.setLatestEventInfo(this, "天天在线管理端", "守护进程正在后台运行......",  
+				 pendingintent); 		 		
+		startForeground(0x111, notification);
 		user=BmobUser.getCurrentUser(getApplicationContext(), MyUser.class);
 		new CountThread().start();
 		registerReceiver();
@@ -36,6 +47,7 @@ public class HeartService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		stopForeground(true);
 		unregisterReceiver(receiver);
 	}
 	
