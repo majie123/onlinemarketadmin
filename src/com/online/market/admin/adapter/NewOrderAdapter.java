@@ -31,7 +31,7 @@ public class NewOrderAdapter extends BaseOrderAdapter {
 						if(user.getGroup()==MyUser.GROUP_PACKER){
 							update(bean, FIELD_PACKER, user.getUsername());
 						}else if(user.getGroup()==MyUser.GROUP_DISPATCHER){
-							update(bean, FIELD_PACKER, user.getUsername());
+							update(bean, FIELD_DISPATCHER, user.getUsername());
 						}
 						dialog.dismiss();
 					}
