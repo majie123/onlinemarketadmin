@@ -5,6 +5,7 @@ import java.io.File;
 import cn.bmob.v3.BmobUser;
 
 import com.online.market.admin.bean.MyUser;
+import com.online.market.admin.util.ActivityControl;
 import com.online.market.admin.util.FileUtils;
 
 import android.app.Activity;
@@ -22,6 +23,7 @@ public abstract class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ActivityControl.getInstance().addActivity(this);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		user=BmobUser.getCurrentUser(this, MyUser.class);
@@ -73,6 +75,12 @@ public abstract class BaseActivity extends Activity {
 	protected void onRestart() {
 		super.onRestart();
 		user=BmobUser.getCurrentUser(this, MyUser.class);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		ActivityControl.getInstance().removeActivity(this);
 	}
 
 }

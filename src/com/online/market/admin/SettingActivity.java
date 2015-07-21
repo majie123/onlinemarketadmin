@@ -1,10 +1,14 @@
 package com.online.market.admin;
 
+import java.util.List;
+
 import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.servie.HeartService;
+import com.online.market.admin.util.ActivityControl;
 import com.online.market.admin.util.DialogUtil;
 
 import cn.bmob.v3.BmobUser;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,11 +65,13 @@ public class SettingActivity extends BaseActivity {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						BmobUser.logOut(SettingActivity.this);
-						startActivity(LoginActivity.class);
 						//终止掉轮询进程
 						stopService(new Intent(SettingActivity.this, HeartService.class));
-						finish();
 						arg0.dismiss();
+						List<Activity> activities=ActivityControl.getInstance().getListActivitys();
+						for(Activity activity:activities){
+							activity.finish();
+						}
 					}
 
 				}, "取消", new DialogInterface.OnClickListener() {
