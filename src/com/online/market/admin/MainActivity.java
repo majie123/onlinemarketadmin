@@ -17,6 +17,7 @@ import com.online.market.admin.fragment.PackedOrderFragment;
 import com.online.market.admin.fragment.UnpackedOrderFragment;
 import com.online.market.admin.fragment.base.BaseOrderFragment;
 import com.online.market.admin.servie.HeartService;
+import com.online.market.admin.util.SharedPrefUtil;
 import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends BaseActivity {
@@ -82,7 +83,10 @@ public class MainActivity extends BaseActivity {
 		}
 		
 		if(user.getGroup()!=MyUser.GROUP_ROOT){
-			startService(new Intent(this, HeartService.class));
+			SharedPrefUtil su=new SharedPrefUtil(this, "tiantianadmin");
+			if(su.getValueByKey(SettingActivity.STATE, SettingActivity.STATE_ONLINE).equals(SettingActivity.STATE_ONLINE)){
+				startService(new Intent(this, HeartService.class));
+			}
 		}
 	}
 
