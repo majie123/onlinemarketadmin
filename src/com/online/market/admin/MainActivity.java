@@ -17,7 +17,7 @@ import com.online.market.admin.fragment.PackedOrderFragment;
 import com.online.market.admin.fragment.UnpackedOrderFragment;
 import com.online.market.admin.fragment.base.BaseOrderFragment;
 import com.online.market.admin.servie.HeartService;
-import com.testin.agent.TestinAgent;
+import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends BaseActivity {
 	public static String APPID = "bb9c8700c4d1821c09bfebaf1ba006b1";
@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public void initData() {
 		Bmob.initialize(getApplicationContext(),APPID);
-		TestinAgent.init(this, "215008c07a999b080bfa94bc57607040", "android");
+		MobclickAgent.updateOnlineConfig(this);
 
 		if(user==null){
 			startActivity(LoginActivity.class);

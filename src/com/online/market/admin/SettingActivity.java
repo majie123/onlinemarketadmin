@@ -6,6 +6,7 @@ import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.servie.HeartService;
 import com.online.market.admin.util.ActivityControl;
 import com.online.market.admin.util.DialogUtil;
+import com.online.market.admin.util.SharedPrefUtil;
 
 import cn.bmob.v3.BmobUser;
 import android.app.Activity;
@@ -17,8 +18,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class SettingActivity extends BaseActivity {
+	public static final String STATE="state";
+	public static final String STATE_ONLINE="online";
+	public static final String STATE_OFFLINE="offline";
 
-	private Button btPublish,btLogout;
+	private Button btPublish,btLogout,btSetOffline;
+	private SharedPrefUtil su;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +38,50 @@ public class SettingActivity extends BaseActivity {
 	@Override
 	public void initViews() {
 
-		btPublish=(Button) findViewById(R.id.publish_commodity);
-		btLogout=(Button) findViewById(R.id.logout);
+		btPublish=(Button) findViewById(R.id.bt_publish_commodity);
+		btLogout=(Button) findViewById(R.id.bt_logout);
+		btSetOffline=(Button) findViewById(R.id.bt_setoffline);
+
 	}
 
 	@Override
 	public void initData() {
+		su=new SharedPrefUtil(this, "tiantianadmin");
+		setOnlineState();
 
 		if(user.getGroup()!=MyUser.GROUP_ROOT){
 			btPublish.setVisibility(View.GONE);
+		}else{
+			btSetOffline.setVisibility(View.GONE);
+		}
+	}
+	
+	private void setOnlineState(){
+		if(su.getValueByKey(STATE,STATE_ONLINE).equals(STATE_ONLINE)){
+			btSetOffline.setText("设置为离线");
+		}else{
+			btSetOffline.setText("设置为在线");
 		}
 	}
 
 	@Override
 	public void setListeners() {
+		
+		btSetOffline.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent=new Intent(SettingActivity.this, HeartService.class);
+				if(su.getValueByKey(STATE,STATE_ONLINE).equals(STATE_ONLINE)){
+					su.putValueByKey(STATE, STATE_OFFLINE);
+					stopService(intent);
+				}else{
+					su.putValueByKey(STATE, STATE_ONLINE);
+					startService(intent);
+				}
+				setOnlineState();
+			}
+		});
 
 		btPublish.setOnClickListener(new OnClickListener() {
 			

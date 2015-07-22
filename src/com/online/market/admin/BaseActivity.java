@@ -2,18 +2,18 @@ package com.online.market.admin;
 
 import java.io.File;
 
-import cn.bmob.v3.BmobUser;
-
-import com.online.market.admin.bean.MyUser;
-import com.online.market.admin.util.ActivityControl;
-import com.online.market.admin.util.FileUtils;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
+import cn.bmob.v3.BmobUser;
+
+import com.online.market.admin.bean.MyUser;
+import com.online.market.admin.util.ActivityControl;
+import com.online.market.admin.util.FileUtils;
+import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseActivity extends Activity {
 	
@@ -82,5 +82,13 @@ public abstract class BaseActivity extends Activity {
 		super.onDestroy();
 		ActivityControl.getInstance().removeActivity(this);
 	}
-
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}	
 }

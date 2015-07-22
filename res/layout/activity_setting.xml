@@ -34,15 +34,21 @@
     
 
     <Button
-        android:id="@+id/publish_commodity"
+        android:id="@+id/bt_publish_commodity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="发布商品" />
     
-    <Button
-        android:id="@+id/logout"
+     <Button
+        android:id="@+id/bt_setoffline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="退出" />
+        android:text="设置为离线" />
+    
+    <Button
+        android:id="@+id/bt_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="退出登录" />
 
 </LinearLayout>

@@ -1,12 +1,12 @@
 package com.online.market.admin;
 
-import cn.bmob.v3.BmobUser;
-
-import com.online.market.admin.bean.MyUser;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.widget.Toast;
+import cn.bmob.v3.BmobUser;
+
+import com.online.market.admin.bean.MyUser;
+import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseFragment extends Fragment {
 	protected MyUser user;
@@ -28,6 +28,15 @@ public abstract class BaseFragment extends Fragment {
 	/** toast **/
 	public void toastMsg(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+	}
+	
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onPageStart("MainScreen"); //统计页面
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("MainScreen"); 
 	}
 
 }
