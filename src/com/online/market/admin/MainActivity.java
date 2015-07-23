@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity {
 		Bmob.initialize(getApplicationContext(),APPID);
 		MobclickAgent.updateOnlineConfig(this);
 		UmengUpdateAgent.setUpdateOnlyWifi(false);
-		UmengUpdateAgent.update(this);
+		UmengUpdateAgent.forceUpdate(this);
 
 		if(user==null){
 			startActivity(LoginActivity.class);
