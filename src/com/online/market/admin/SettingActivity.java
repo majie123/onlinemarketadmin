@@ -71,13 +71,15 @@ public class SettingActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent intent=new Intent(SettingActivity.this, HeartService.class);
+//				Intent intent=new Intent(SettingActivity.this, HeartService.class);
 				if(su.getValueByKey(STATE,STATE_ONLINE).equals(STATE_ONLINE)){
 					su.putValueByKey(STATE, STATE_OFFLINE);
-					stopService(intent);
+					toastMsg("已离线,将不再接收新订单");
+//					stopService(intent);
 				}else{
 					su.putValueByKey(STATE, STATE_ONLINE);
-					startService(intent);
+					toastMsg("已在线,将接收新订单");
+//					startService(intent);
 				}
 				setOnlineState();
 			}

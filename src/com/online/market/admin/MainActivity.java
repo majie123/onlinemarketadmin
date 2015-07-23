@@ -17,8 +17,8 @@ import com.online.market.admin.fragment.PackedOrderFragment;
 import com.online.market.admin.fragment.UnpackedOrderFragment;
 import com.online.market.admin.fragment.base.BaseOrderFragment;
 import com.online.market.admin.servie.HeartService;
-import com.online.market.admin.util.SharedPrefUtil;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 public class MainActivity extends BaseActivity {
 	public static String APPID = "bb9c8700c4d1821c09bfebaf1ba006b1";
@@ -58,6 +58,8 @@ public class MainActivity extends BaseActivity {
 	public void initData() {
 		Bmob.initialize(getApplicationContext(),APPID);
 		MobclickAgent.updateOnlineConfig(this);
+		UmengUpdateAgent.setUpdateOnlyWifi(false);
+		UmengUpdateAgent.update(this);
 
 		if(user==null){
 			startActivity(LoginActivity.class);
@@ -83,10 +85,10 @@ public class MainActivity extends BaseActivity {
 		}
 		
 		if(user.getGroup()!=MyUser.GROUP_ROOT){
-			SharedPrefUtil su=new SharedPrefUtil(this, "tiantianadmin");
-			if(su.getValueByKey(SettingActivity.STATE, SettingActivity.STATE_ONLINE).equals(SettingActivity.STATE_ONLINE)){
+//			SharedPrefUtil su=new SharedPrefUtil(this, "tiantianadmin");
+//			if(su.getValueByKey(SettingActivity.STATE, SettingActivity.STATE_ONLINE).equals(SettingActivity.STATE_ONLINE)){
 				startService(new Intent(this, HeartService.class));
-			}
+//			}
 		}
 	}
 

@@ -18,11 +18,14 @@ import cn.bmob.v3.listener.FindListener;
 import com.online.market.admin.MainActivity;
 import com.online.market.admin.NewOrderActivity;
 import com.online.market.admin.R;
+import com.online.market.admin.SettingActivity;
 import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.bean.OrderBean;
+import com.online.market.admin.util.SharedPrefUtil;
 
 public class HeartService extends Service {
 	private MyUser user;
+	private SharedPrefUtil su;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -32,6 +35,7 @@ public class HeartService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		su=new SharedPrefUtil(this, "tiantianadmin");
 		Notification notification = new Notification(R.drawable.ic_launcher,  
 		getString(R.string.app_name), System.currentTimeMillis());  
 		 PendingIntent pendingintent = PendingIntent.getActivity(this, 0,  
@@ -74,7 +78,7 @@ public class HeartService extends Service {
 		
 		@Override
 		public void onReceive(Context arg0, Intent intent) {
-			if(intent.getAction().equals("intent_count")){
+			if(intent.getAction().equals("intent_count")&&su.getValueByKey(SettingActivity.STATE,SettingActivity.STATE_ONLINE).equals(SettingActivity.STATE_ONLINE)){
 				int count=intent.getIntExtra("count", -1);
 				//每120秒刷新一次
 				if(count%120==0){
