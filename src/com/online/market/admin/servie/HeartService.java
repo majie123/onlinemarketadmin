@@ -22,10 +22,12 @@ import com.online.market.admin.SettingActivity;
 import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.util.SharedPrefUtil;
+import com.online.market.admin.util.Speecher;
 
 public class HeartService extends Service {
 	private MyUser user;
 	private SharedPrefUtil su;
+//	private Speecher speecher;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -35,6 +37,7 @@ public class HeartService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+//		speecher=new Speecher(getApplicationContext());
 		su=new SharedPrefUtil(this, "tiantianadmin");
 		Notification notification = new Notification(R.drawable.ic_launcher,  
 		getString(R.string.app_name), System.currentTimeMillis());  
@@ -52,6 +55,7 @@ public class HeartService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 		stopForeground(true);
+//		speecher.destroy();
 		unregisterReceiver(receiver);
 	}
 	

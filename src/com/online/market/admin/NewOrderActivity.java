@@ -5,6 +5,7 @@ import java.util.List;
 import com.online.market.admin.adapter.NewOrderAdapter;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.util.SoundUtil;
+import com.online.market.admin.util.Speecher;
 import com.online.market.admin.util.VibratorUtil;
 import com.online.market.admin.view.xlist.XListView;
 
@@ -18,6 +19,7 @@ public class NewOrderActivity extends BaseActivity {
 	private Button btIgnore;
 	private XListView xlv;
 	private List<OrderBean> orders;
+	private Speecher speecher;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class NewOrderActivity extends BaseActivity {
 	@Override
 	public void initData() {
 
+		speecher=new Speecher(this);
 		orders=(List<OrderBean>) getIntent().getSerializableExtra("data");
 		if(orders==null||orders.size()==0){
 			finish();
@@ -49,7 +52,9 @@ public class NewOrderActivity extends BaseActivity {
 		xlv.setAdapter(adapter);
 		
 		VibratorUtil.vibra(this);
-		SoundUtil.soundRing(this);
+//		SoundUtil.soundRing(this);
+		
+		speecher.speech("有新订单了，送货地址："+orders.get(0).getAddress());
 	}
 
 	@Override
@@ -62,6 +67,12 @@ public class NewOrderActivity extends BaseActivity {
 				finish();
 			}
 		});
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		speecher.destroy();
 	}
 
 }
