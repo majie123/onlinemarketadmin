@@ -1,6 +1,7 @@
 package com.online.market.admin;
 
 import java.io.File;
+import java.util.List;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -21,8 +24,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 import com.online.market.admin.bean.CommodityBean;
@@ -30,10 +35,8 @@ import com.online.market.admin.util.BitmapUtil;
 import com.online.market.admin.util.DialogUtil;
 import com.online.market.admin.util.ProgressUtil;
 
-public class PublishCommodityActivity extends BaseActivity {
-	/**
-	 * SDK初始化建议放在启动页
-	 */
+public class EditCommodityActivity extends BaseActivity {
+	
 	public int PICK_REQUEST_CODE = 0;
 	public int 	TAKE_PHOTO_CODE=1;
 	
@@ -45,6 +48,8 @@ public class PublishCommodityActivity extends BaseActivity {
 	private ImageView ivPic;
 	private Button btSubmit;
 	private Spinner categorySpinner;
+	private EditText etSearch;
+	private CommodityBean commodity;
 	
 	private String name;
 	private String price;
@@ -55,7 +60,7 @@ public class PublishCommodityActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_publish_commodity);
+		setContentView(R.layout.activity_edit_commodity);
 
 		initViews();
 		setListeners();
@@ -69,6 +74,7 @@ public class PublishCommodityActivity extends BaseActivity {
 		ivPic=(ImageView) findViewById(R.id.iv_pic);
 		btSubmit=(Button) findViewById(R.id.bt_submit);
 		categorySpinner=(Spinner) findViewById(R.id.spinner_category);
+		etSearch=(EditText) findViewById(R.id.et_search);
 		
 		ArrayAdapter< String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorys);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
@@ -78,11 +84,29 @@ public class PublishCommodityActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-//		Bmob.initialize(getApplicationContext(),APPID);
 	}
 
 	@Override
 	public void setListeners() {
+		
+		etSearch.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				queryCommoditys("name", arg0.toString());
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				
+			}
+		});
 		
 		categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -104,22 +128,23 @@ public class PublishCommodityActivity extends BaseActivity {
 				name=etName.getText().toString();
 				price=etPrice.getText().toString();
 				if(TextUtils.isEmpty(name)){
-					toastMsg("name is null");
+					toastMsg("商品名字为空");
 					return;
 				}
 				if(TextUtils.isEmpty(price)){
-					toastMsg("price is null");
-					return;
-				}
-				if(picPath==null){
-					toastMsg("pic is null");
+					toastMsg("商品价格为空");
 					return;
 				}
 				if(category==null){
-					toastMsg("category is null");
+					toastMsg("商品类别为空");
 					return;
 				}
-				uploadFile();
+				if(picPath==null){
+					editCommodity();
+				}else{
+					commodity.getPics().delete(EditCommodityActivity.this);
+					uploadFile();
+				}
 			}
 		});
 		
@@ -127,7 +152,7 @@ public class PublishCommodityActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				DialogUtil.dialog(PublishCommodityActivity.this, "选择图片方式", "拍照", new DialogInterface.OnClickListener() {
+				DialogUtil.dialog(EditCommodityActivity.this, "选择图片方式", "拍照", new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int arg1) {
@@ -227,7 +252,7 @@ public class PublishCommodityActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
-				publishCommodity();
+				editCommodity();
 			}
 
 			@Override
@@ -243,18 +268,20 @@ public class PublishCommodityActivity extends BaseActivity {
 
 	}
     
-    private void publishCommodity(){
+    private void editCommodity(){
     	
     	CommodityBean p=new CommodityBean();
     	p.setName(name);
     	p.setCategory(category);
     	p.setPrice(new Float(price));
     	p.setPics(bmobFile);
-    	p.save(this, new SaveListener() {
-
-			@Override
+    	p.setSold(commodity.getSold());
+    	p.setObjectId(commodity.getObjectId());
+    	p.update(this, new UpdateListener() {
+			
+    		@Override
 			public void onSuccess() {
-				toastMsg("publish成功");
+				toastMsg("编辑成功");
 				finish();
 				ProgressUtil.closeProgress();
 			}
@@ -267,5 +294,38 @@ public class PublishCommodityActivity extends BaseActivity {
 		});
     	
     }
-	
+    
+    private void queryCommoditys(String value,String key){
+    	ProgressUtil.showProgress(this, "");
+		BmobQuery<CommodityBean> query	 = new BmobQuery<CommodityBean>();
+		if(key!=null){
+			query.addWhereContains(value, key);
+		}
+		query.setLimit(10);
+		query.findObjects(this, new FindListener<CommodityBean>() {
+
+			@Override
+			public void onSuccess(List<CommodityBean> object) {
+				ProgressUtil.closeProgress();
+				if(object.size()==0){
+					toastMsg("暂无相关商品");
+					return;
+				}
+				commodity=object.get(0);
+				etName.setText(commodity.getName());
+				etPrice.setText(""+commodity.getPrice());
+				bitmapUtils.display(ivPic, commodity.getPics().getFileUrl(EditCommodityActivity.this), config);
+	            		
+			}
+
+			@Override
+			public void onError(int code, String msg) {
+				ProgressUtil.closeProgress();
+				toastMsg(msg);
+				
+			}
+		});	
+		
+	}
+
 }

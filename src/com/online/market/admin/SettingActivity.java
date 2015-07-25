@@ -22,7 +22,7 @@ public class SettingActivity extends BaseActivity {
 	public static final String STATE_ONLINE="online";
 	public static final String STATE_OFFLINE="offline";
 
-	private Button btPublish,btLogout,btSetOffline;
+	private Button btPublish,btLogout,btSetOffline,btEdit;
 	private SharedPrefUtil su;
 	
 	@Override
@@ -37,7 +37,7 @@ public class SettingActivity extends BaseActivity {
 
 	@Override
 	public void initViews() {
-
+		btEdit=(Button) findViewById(R.id.bt_edit_commodity);
 		btPublish=(Button) findViewById(R.id.bt_publish_commodity);
 		btLogout=(Button) findViewById(R.id.bt_logout);
 		btSetOffline=(Button) findViewById(R.id.bt_setoffline);
@@ -51,6 +51,7 @@ public class SettingActivity extends BaseActivity {
 
 		if(user.getGroup()!=MyUser.GROUP_ROOT){
 			btPublish.setVisibility(View.GONE);
+			btEdit.setVisibility(View.GONE);
 		}else{
 			btSetOffline.setVisibility(View.GONE);
 		}
@@ -66,6 +67,14 @@ public class SettingActivity extends BaseActivity {
 
 	@Override
 	public void setListeners() {
+		
+		btEdit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				startActivity(EditCommodityActivity.class);
+			}
+		});
 		
 		btSetOffline.setOnClickListener(new OnClickListener() {
 			

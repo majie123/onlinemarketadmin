@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.online.market.admin"
     android:versionCode="1"
-    android:versionName="1.0.1" >
+    android:versionName="1.0.0" >
     
     <uses-permission android:name="android.permission.VIBRATE" /> 
     <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>  
@@ -37,6 +37,7 @@
             android:launchMode="singleTask"></activity>
         
         <activity android:name=".PublishCommodityActivity"></activity>
+         <activity android:name=".EditCommodityActivity"></activity>
         <activity android:name=".SettingActivity"></activity>
         <activity android:name=".NewOrderActivity"
             android:launchMode="singleTask"></activity>

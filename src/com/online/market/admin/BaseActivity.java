@@ -10,8 +10,11 @@ import android.view.Window;
 import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
 
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.util.ActivityControl;
+import com.online.market.admin.util.BitmapHelp;
 import com.online.market.admin.util.FileUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -19,6 +22,8 @@ public abstract class BaseActivity extends Activity {
 	
 	protected String dir;
 	protected MyUser user;
+	protected BitmapUtils bitmapUtils;
+	protected BitmapDisplayConfig config;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,8 @@ public abstract class BaseActivity extends Activity {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		user=BmobUser.getCurrentUser(this, MyUser.class);
+		bitmapUtils=BitmapHelp.getBitmapUtils(this);
+		config=BitmapHelp.getDisplayConfig(this, 50, 50);
 
 		dir=FileUtils._PATH;
 		File dirFile=new File(dir);

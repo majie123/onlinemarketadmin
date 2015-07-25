@@ -135,12 +135,14 @@ public abstract class BaseOrderFragment extends BaseFragment {
 				if(count%10==0&&adapter!=null){
 					adapter.notifyDataSetChanged();
 				}
-				if(count%60==0){
+				if(count%50==0){
 					for(OrderBean order:orders){
 						if(order.isOutOfTime()){
 							speecher.speech("有订单已经超时，请尽快处理");
+							break;
 						}else if(order.isHurryUp()){
 							speecher.speech("有订单即将超时，请尽快处理");
+							break;
 						}
 					}
 				}
