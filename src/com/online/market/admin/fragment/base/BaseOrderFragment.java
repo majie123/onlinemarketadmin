@@ -21,6 +21,7 @@ import com.online.market.admin.adapter.BaseOrderAdapter;
 import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.util.ProgressUtil;
+import com.online.market.admin.util.Speecher;
 import com.online.market.admin.view.xlist.XListView;
 import com.online.market.admin.view.xlist.XListView.IXListViewListener;
 
@@ -31,6 +32,15 @@ public abstract class BaseOrderFragment extends BaseFragment {
 	protected List<OrderBean> orders=new ArrayList<OrderBean>();
 	private TextView tvNoOrder;
 	protected BaseOrderAdapter adapter;
+	private Speecher speecher;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		speecher=Speecher.getSpeecher(getActivity());
+		registerReceiver();
+
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,6 +135,15 @@ public abstract class BaseOrderFragment extends BaseFragment {
 				if(count%10==0&&adapter!=null){
 					adapter.notifyDataSetChanged();
 				}
+				if(count%60==0){
+					for(OrderBean order:orders){
+						if(order.isOutOfTime()){
+							speecher.speech("有订单已经超时，请尽快处理");
+						}else if(order.isHurryUp()){
+							speecher.speech("有订单即将超时，请尽快处理");
+						}
+					}
+				}
 			}
 		}
 	};
@@ -134,17 +153,12 @@ public abstract class BaseOrderFragment extends BaseFragment {
 		getActivity().registerReceiver(receiver, filter);
 	}
 	
-	public void onPause() {
+	@Override
+	public void onDestroy() {
 		super.onDestroy();
 		if(receiver!=null){
 			getActivity().unregisterReceiver(receiver);
 		}
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		registerReceiver();
 	}
 
 }

@@ -42,7 +42,7 @@ public class NewOrderActivity extends BaseActivity {
 	@Override
 	public void initData() {
 
-		speecher=new Speecher(this);
+		speecher=Speecher.getSpeecher(this);
 		orders=(List<OrderBean>) getIntent().getSerializableExtra("data");
 		if(orders==null||orders.size()==0){
 			finish();

@@ -74,7 +74,8 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
         	tvOrderPaymethod.setText("货到付款：需支付 "+bean.getPrice()+" 元");
         }else {
         	tvOrderPaymethod.setText("在线已支付");
-        }        String time=DateUtil.getDate(bean.getCreatedAt());
+        }        
+        String time=DateUtil.getDate(bean.getCreatedAt());
         tvOrderTime.setText(time);
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){

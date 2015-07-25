@@ -1,7 +1,6 @@
 package com.online.market.admin.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
@@ -12,12 +11,20 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 
 public class Speecher {
+	private static Speecher speecher;
 	private SpeechSynthesizer mTts;
 
-	public Speecher(Context context){
+	private Speecher(Context context){
 		SpeechUtility.createUtility(context, "appid=55b23745");
 		mTts = SpeechSynthesizer.createSynthesizer(context, mTtsInitListener);
 		set_mTts();
+	}
+	
+	public static Speecher getSpeecher(Context context){
+		if(speecher==null){
+			speecher=new Speecher(context);
+		}
+		return speecher;
 	}
 	
 	/**
@@ -90,8 +97,11 @@ public class Speecher {
 
 	
 	public void destroy() {
-		mTts.stopSpeaking();
-		mTts.destroy();
+		if(mTts!=null){
+			mTts.stopSpeaking();
+			mTts.destroy();
+			speecher=null;
+		}
 	}
 
 }
