@@ -104,19 +104,19 @@ public class PublishCommodityActivity extends BaseActivity {
 				name=etName.getText().toString();
 				price=etPrice.getText().toString();
 				if(TextUtils.isEmpty(name)){
-					toastMsg("name is null");
+					toastMsg("商品名称为空");
 					return;
 				}
 				if(TextUtils.isEmpty(price)){
-					toastMsg("price is null");
+					toastMsg("商品价格为空");
 					return;
 				}
 				if(picPath==null){
-					toastMsg("pic is null");
+					toastMsg("商品图片为空");
 					return;
 				}
 				if(category==null){
-					toastMsg("category is null");
+					toastMsg("商品分类为空");
 					return;
 				}
 				uploadFile();
@@ -254,7 +254,7 @@ public class PublishCommodityActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess() {
-				toastMsg("publish成功");
+				toastMsg("发布成功");
 				finish();
 				ProgressUtil.closeProgress();
 			}

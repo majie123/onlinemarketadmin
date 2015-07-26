@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -47,6 +48,8 @@ public class EditCommodityActivity extends BaseActivity {
 	private EditText etPrice;
 	private ImageView ivPic;
 	private Button btSubmit;
+	private Button btDelete;
+
 	private Spinner categorySpinner;
 	private EditText etSearch;
 	private CommodityBean commodity;
@@ -73,6 +76,8 @@ public class EditCommodityActivity extends BaseActivity {
 		etPrice=(EditText) findViewById(R.id.et_price);
 		ivPic=(ImageView) findViewById(R.id.iv_pic);
 		btSubmit=(Button) findViewById(R.id.bt_submit);
+		btDelete=(Button) findViewById(R.id.bt_delete);
+
 		categorySpinner=(Spinner) findViewById(R.id.spinner_category);
 		etSearch=(EditText) findViewById(R.id.et_search);
 		
@@ -125,6 +130,10 @@ public class EditCommodityActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
+				if(commodity==null){
+					toastMsg("请先搜索商品");
+					return;
+				}
 				name=etName.getText().toString();
 				price=etPrice.getText().toString();
 				if(TextUtils.isEmpty(name)){
@@ -145,6 +154,31 @@ public class EditCommodityActivity extends BaseActivity {
 					commodity.getPics().delete(EditCommodityActivity.this);
 					uploadFile();
 				}
+			}
+		});
+		
+		btDelete.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if(commodity==null){
+					toastMsg("请先搜索商品");
+					return;
+				}
+				commodity.getPics().delete(EditCommodityActivity.this);
+				commodity.delete(EditCommodityActivity.this, new DeleteListener() {
+					
+					@Override
+					public void onSuccess() {
+						toastMsg("删除成功");
+						finish();
+					}
+					
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						toastMsg("删除失败 "+arg1);
+					}
+				});;
 			}
 		});
 		
