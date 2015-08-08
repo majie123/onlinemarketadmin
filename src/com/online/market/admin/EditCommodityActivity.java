@@ -148,12 +148,26 @@ public class EditCommodityActivity extends BaseActivity {
 					toastMsg("商品类别为空");
 					return;
 				}
-				if(picPath==null){
-					editCommodity();
-				}else{
-					commodity.getPics().delete(EditCommodityActivity.this);
-					uploadFile();
-				}
+                DialogUtil.dialog(EditCommodityActivity.this, "您确认修改商品吗？", "确认", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						if(picPath==null){
+							editCommodity();
+						}else{
+							commodity.getPics().delete(EditCommodityActivity.this);
+							uploadFile();
+						}
+						dialog.dismiss();
+					}
+				}, "取消", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						dialog.dismiss();
+					}
+				});
+				
 			}
 		});
 		
@@ -165,20 +179,34 @@ public class EditCommodityActivity extends BaseActivity {
 					toastMsg("请先搜索商品");
 					return;
 				}
-				commodity.getPics().delete(EditCommodityActivity.this);
-				commodity.delete(EditCommodityActivity.this, new DeleteListener() {
+				DialogUtil.dialog(EditCommodityActivity.this, "您确认删除商品吗？", "确认", new DialogInterface.OnClickListener() {
 					
 					@Override
-					public void onSuccess() {
-						toastMsg("删除成功");
-						finish();
+					public void onClick(DialogInterface dialog, int arg1) {
+						commodity.getPics().delete(EditCommodityActivity.this);
+						commodity.delete(EditCommodityActivity.this, new DeleteListener() {
+							
+							@Override
+							public void onSuccess() {
+								toastMsg("删除成功");
+								finish();
+							}
+							
+							@Override
+							public void onFailure(int arg0, String arg1) {
+								toastMsg("删除失败 "+arg1);
+							}
+						});
+						dialog.dismiss();
 					}
+				}, "取消", new DialogInterface.OnClickListener() {
 					
 					@Override
-					public void onFailure(int arg0, String arg1) {
-						toastMsg("删除失败 "+arg1);
+					public void onClick(DialogInterface dialog, int arg1) {
+						dialog.dismiss();
 					}
-				});;
+				});
+				
 			}
 		});
 		

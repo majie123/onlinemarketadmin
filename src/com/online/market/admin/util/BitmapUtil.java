@@ -1,5 +1,7 @@
 package com.online.market.admin.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,7 +14,6 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.util.Log;
 
 public class BitmapUtil {
 	
@@ -34,12 +35,12 @@ public class BitmapUtil {
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, options);
         if (bitmap == null)
         {
-        	Log.e("majie", "bitmap为空");
+//        	Log.e("majie", "bitmap为空");
 //        	return null;
         }
         float realWidth = options.outWidth;
         float realHeight = options.outHeight;
-        Log.e("majie", "真实图片高度：" + realHeight + "宽度:" + realWidth);
+//        Log.e("majie", "真实图片高度：" + realHeight + "宽度:" + realWidth);
         // 计算缩放比&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         int scale = (int) ((realHeight < realWidth ? realHeight : realWidth) / width);
         if (scale <= 0)
@@ -52,7 +53,7 @@ public class BitmapUtil {
         bitmap = BitmapFactory.decodeFile(srcPath, options);
         int w = bitmap.getWidth();
         int h = bitmap.getHeight();
-        Log.e("majie", "缩略图高度：" + h + "宽度:" + w);
+//        Log.e("majie", "缩略图高度：" + h + "宽度:" + w);
         return bitmap;
     }
 	
@@ -159,5 +160,20 @@ public class BitmapUtil {
 	public static Bitmap zoomByHeight(Bitmap bitmap, int newHeight){
 		return zoom(bitmap, -1, newHeight);
 	}
+	
+	public static  Bitmap compressImage(Bitmap image) {  
+		  
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中  
+        int options = 100;  
+        while ( baos.toByteArray().length / 1024>100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩         
+            baos.reset();//重置baos即清空baos  
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中  
+            options -= 10;//每次都减少10  
+        }  
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中  
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片  
+        return bitmap;  
+    }  
 
 }
