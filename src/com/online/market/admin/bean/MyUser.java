@@ -15,35 +15,52 @@ public class MyUser extends BmobUser {
 	
 	private static final long serialVersionUID = 1L;
 	private String nickname;
-//	private Boolean gender;
 	private BmobFile avatar;
-//	private int age;
 	private int group;
 	
+	/***
+	 * 我的邀请码
+	 */
+	private String inviteCode;
+	/***
+	 * 我的邀请人的邀请码
+	 */
+	private String byInviteCode;
+	/***
+	 * 是否消费过
+	 */
+	private boolean isCousumed=false;
+	
+	public String getInviteCode() {
+		return inviteCode;
+	}
+	public void setInviteCode(String inviteCode) {
+		this.inviteCode = inviteCode;
+	}
+	public String getByInviteCode() {
+		return byInviteCode;
+	}
+	public void setByInviteCode(String byInviteCode) {
+		this.byInviteCode = byInviteCode;
+	}
+	public boolean isCousumed() {
+		return isCousumed;
+	}
+	public void setCousumed(boolean isCousumed) {
+		this.isCousumed = isCousumed;
+	}
 	public BmobFile getAvatar() {
 		return avatar;
 	}
 	public void setAvatar(BmobFile avatar) {
 		this.avatar = avatar;
 	}
-//	public Boolean getGender() {
-//		return gender;
-//	}
-//	public void setGender(Boolean gender) {
-//		this.gender = gender;
-//	}
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String realname) {
 		this.nickname = realname;
 	}
-//	public int getAge() {
-//		return age;
-//	}
-//	public void setAge(int age) {
-//		this.age = age;
-//	}
 	public int getGroup() {
 		return group;
 	}
