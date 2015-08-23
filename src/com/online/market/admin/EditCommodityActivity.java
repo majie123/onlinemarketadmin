@@ -273,11 +273,11 @@ public class EditCommodityActivity extends BaseActivity {
 		new Thread(){
 			public void run() {
 				super.run();
-				Bitmap bitmap=BitmapUtil.getThumbilBitmap(path, 200);
-				int wh=Math.min(bitmap.getWidth(), bitmap.getHeight());
-				bitmap=BitmapUtil.getCanvasBitmap(bitmap, wh, wh);
+				Bitmap bitmap=BitmapUtil.getThumbilBitmap(path, 350);
+				bitmap=BitmapUtil.compressImage(bitmap);
 				picPath=dir+path.substring(path.lastIndexOf("/")+1);
 				BitmapUtil.saveBitmapToSdcard(bitmap, picPath);
+				bitmap.recycle();
 				handler.sendEmptyMessage(0);
 			};
 		}.start();

@@ -29,7 +29,7 @@ public class MyUser extends BmobUser {
 	/***
 	 * 是否消费过
 	 */
-	private boolean isCousumed=false;
+//	private boolean isCousumed=false;
 	
 	public String getInviteCode() {
 		return inviteCode;
@@ -43,12 +43,12 @@ public class MyUser extends BmobUser {
 	public void setByInviteCode(String byInviteCode) {
 		this.byInviteCode = byInviteCode;
 	}
-	public boolean isCousumed() {
-		return isCousumed;
-	}
-	public void setCousumed(boolean isCousumed) {
-		this.isCousumed = isCousumed;
-	}
+//	public boolean isCousumed() {
+//		return isCousumed;
+//	}
+//	public void setCousumed(boolean isCousumed) {
+//		this.isCousumed = isCousumed;
+//	}
 	public BmobFile getAvatar() {
 		return avatar;
 	}

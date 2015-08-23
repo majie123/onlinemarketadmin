@@ -2,29 +2,25 @@ package com.online.market.admin.adapter;
 
 import java.util.List;
 
-import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindCallback;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.AsyncCustomEndpoints;
+import cn.bmob.v3.listener.CloudCodeListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.online.market.admin.R;
 import com.online.market.admin.adapter.base.MyBaseAdapter;
 import com.online.market.admin.adapter.base.ViewHolder;
-import com.online.market.admin.bean.CouponBean;
-import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.bean.OrderBean;
 import com.online.market.admin.bean.ShopCartaBean;
 import com.online.market.admin.util.DateUtil;
@@ -160,7 +156,25 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 				ShowToast("成功");
 				ProgressUtil.closeProgress();
 				if(bean.getState()==OrderBean.STATE_DEPART){
-					rewardInvitor(bean.getUsername());
+					AsyncCustomEndpoints ace = new AsyncCustomEndpoints();
+					JSONObject object=new JSONObject();
+					try {
+						object.put("username", bean.getUsername());
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					//第一个参数是上下文对象，第二个参数是云端代码的方法名称，第三个参数是上传到云端代码的参数列表（JSONObject cloudCodeParams），第四个参数是回调类
+					ace.callEndpoint(mContext, "reward", object, 
+					    new CloudCodeListener() {
+					            @Override
+					            public void onSuccess(Object object) {
+					                ShowToast( object.toString());
+					            }
+					            @Override
+					            public void onFailure(int code, String msg) {
+					            	ShowToast("奖励失败:" + msg);
+					            }
+					        });
 				}
 			}
 			
@@ -174,69 +188,5 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 		
 	}
 	
-	/***
-	 * 奖励推荐人
-	 */
-	private void rewardInvitor(String username){
-		BmobQuery<MyUser> bmobQuery=new BmobQuery<MyUser>();
-		bmobQuery.addWhereEqualTo("username", username);
-		bmobQuery.findObjects(mContext, new FindListener<MyUser>() {
-			
-			@Override
-			public void onSuccess(List<MyUser> users) {
-				if(users.size()!=0&&!users.get(0).isCousumed()){
-					//更新已消费过，下次消费不再奖励邀请人优惠券
-					MyUser user=users.get(0);
-					MyUser myUser=new MyUser();
-					myUser.setUsername(user.getUsername());
-					myUser.setInviteCode(user.getInviteCode());
-					myUser.setByInviteCode(user.getByInviteCode());
-					myUser.setCousumed(true);
-					myUser.setNickname(user.getNickname());
-					myUser.setGroup(user.getGroup());
-					myUser.setObjectId(user.getObjectId());
-					myUser.update(mContext);
-					
-					BmobQuery<MyUser> bmobQuery=new BmobQuery<MyUser>();
-					bmobQuery.addWhereEqualTo("inviteCode", users.get(0).getByInviteCode());
-					bmobQuery.findObjects(mContext, new FindListener<MyUser>() {
-
-						@Override
-						public void onError(int arg0, String arg1) {
-							Log.i("majie", "query invitecode fail");
-						}
-
-						@Override
-						public void onSuccess(List<MyUser> users) {
-							if(users.size()!=0){
-								CouponBean coupon=new CouponBean();
-								coupon.setLimit(10);
-								coupon.setAmount(5);
-								coupon.setType(CouponBean.COUPON_TYPE_ONSALE);
-								coupon.setUsername(users.get(0).getUsername());
-								coupon.save(mContext, new SaveListener() {
-									
-									@Override
-									public void onSuccess() {
-										Log.i("majie", "coupon insert success");
-									}
-									
-									@Override
-									public void onFailure(int arg0, String arg1) {
-										Log.i("majie", "coupon insert fail");
-									}
-								});
-							}
-						}
-					});
-				}
-			}
-			
-			@Override
-			public void onError(int arg0, String arg1) {
-				Log.i("majie", "query user fail");
-			}
-		});
-	}
 
 }
