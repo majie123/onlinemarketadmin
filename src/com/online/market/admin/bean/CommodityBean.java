@@ -4,6 +4,9 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 
 public class CommodityBean extends BmobObject{
+	public static int STATUS_NORMAL=0;
+	/**下架*/
+	public static int STATUS_OFFSALE=1;
 
 	/**
 	 * 
@@ -15,6 +18,7 @@ public class CommodityBean extends BmobObject{
 	private BmobFile pics;
 	private String category;
 	private int sold;
+	private int status;
 	
 	public String getName() {
 		return name;
@@ -45,6 +49,12 @@ public class CommodityBean extends BmobObject{
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

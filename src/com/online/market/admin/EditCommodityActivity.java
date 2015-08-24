@@ -49,6 +49,7 @@ public class EditCommodityActivity extends BaseActivity {
 	private ImageView ivPic;
 	private Button btSubmit;
 	private Button btDelete;
+	private Button btOffsale;
 
 	private Spinner categorySpinner;
 	private EditText etSearch;
@@ -77,6 +78,7 @@ public class EditCommodityActivity extends BaseActivity {
 		ivPic=(ImageView) findViewById(R.id.iv_pic);
 		btSubmit=(Button) findViewById(R.id.bt_submit);
 		btDelete=(Button) findViewById(R.id.bt_delete);
+		btOffsale=(Button) findViewById(R.id.bt_offsale);
 
 		categorySpinner=(Spinner) findViewById(R.id.spinner_category);
 		etSearch=(EditText) findViewById(R.id.et_search);
@@ -207,6 +209,48 @@ public class EditCommodityActivity extends BaseActivity {
 					}
 				});
 				
+			}
+		});
+		
+		btOffsale.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if(commodity==null){
+					toastMsg("请先搜索商品");
+					return;
+				}
+				DialogUtil.dialog(EditCommodityActivity.this, "确认将该商品下架吗？", "确认", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						if(commodity.getStatus()==CommodityBean.STATUS_NORMAL){
+							commodity.setStatus(CommodityBean.STATUS_OFFSALE);
+						}else{
+							commodity.setStatus(CommodityBean.STATUS_NORMAL);
+						}
+						commodity.update(EditCommodityActivity.this, new UpdateListener() {
+							
+							@Override
+							public void onSuccess() {
+								toastMsg("成功");
+								finish();
+							}
+							
+							@Override
+							public void onFailure(int arg0, String arg1) {
+								toastMsg("失败");
+							}
+						});
+						dialog.dismiss();
+					}
+				}, "取消", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						dialog.dismiss();
+					}
+				});
 			}
 		});
 		
@@ -377,7 +421,11 @@ public class EditCommodityActivity extends BaseActivity {
 				etName.setText(commodity.getName());
 				etPrice.setText(""+commodity.getPrice());
 				bitmapUtils.display(ivPic, commodity.getPics().getFileUrl(EditCommodityActivity.this), config);
-	            		
+	            if(commodity.getStatus()==CommodityBean.STATUS_NORMAL){
+	            	btOffsale.setText("下架");
+	            }else{
+	            	btOffsale.setText("上架");
+	            }
 			}
 
 			@Override
