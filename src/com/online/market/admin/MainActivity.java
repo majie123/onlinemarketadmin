@@ -82,6 +82,10 @@ public class MainActivity extends BaseActivity {
 			paFragment=new PackedOrderFragment();
 			replaceFragment(paFragment);
 			
+		}else {
+			initLastBt(btUnPacked);
+			utFragment=new UnpackedOrderFragment();
+			replaceFragment(utFragment);
 		}
 		
 		if(user.getGroup()!=MyUser.GROUP_ROOT){

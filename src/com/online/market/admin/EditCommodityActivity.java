@@ -41,7 +41,7 @@ public class EditCommodityActivity extends BaseActivity {
 	public int PICK_REQUEST_CODE = 0;
 	public int 	TAKE_PHOTO_CODE=1;
 	
-	private String [] categorys={"吃的","喝的","床上用品","用的","其他"};
+	private String [] categorys={"所有","休闲零食","饮料牛奶","泡面搭档","生活用品","日用文具","其他"};
 	private String category;
 	
 	private EditText etName;
