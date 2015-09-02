@@ -1,5 +1,6 @@
 package com.online.market.admin.adapter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.json.JSONException;
@@ -76,7 +77,9 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
         if(bean.getPayMethod()==OrderBean.PAYMETHOD_PAYFAILED){
         	tvOrderPaymethod.setText("付款失败");
         }else if(bean.getPayMethod()==OrderBean.PAYMETHOD_CASHONDELIVEY){
-        	tvOrderPaymethod.setText("货到付款：需支付 "+bean.getPrice()+" 元");
+        	DecimalFormat   df=new DecimalFormat("#.##");   
+    		String totalPriceStr=df.format(bean.getPrice());
+        	tvOrderPaymethod.setText("货到付款：需支付 "+totalPriceStr+" 元");
         }else {
         	tvOrderPaymethod.setText("在线已支付");
         }        

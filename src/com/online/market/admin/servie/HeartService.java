@@ -84,7 +84,7 @@ public class HeartService extends Service {
 			if(intent.getAction().equals("intent_count")&&su.getValueByKey(SettingActivity.STATE,SettingActivity.STATE_ONLINE).equals(SettingActivity.STATE_ONLINE)){
 				int count=intent.getIntExtra("count", -1);
 				//每120秒刷新一次
-				if(count%120==0){
+				if(count%60==0){
 					queryOrders();
 				}
 			}

@@ -20,6 +20,7 @@ import com.online.market.admin.R;
 import com.online.market.admin.adapter.BaseOrderAdapter;
 import com.online.market.admin.bean.MyUser;
 import com.online.market.admin.bean.OrderBean;
+import com.online.market.admin.fragment.CompletedOrderFragment;
 import com.online.market.admin.util.ProgressUtil;
 import com.online.market.admin.util.Speecher;
 import com.online.market.admin.view.xlist.XListView;
@@ -137,12 +138,14 @@ public abstract class BaseOrderFragment extends BaseFragment {
 				}
 				if(count%50==0){
 					for(OrderBean order:orders){
-						if(order.isOutOfTime()){
-							speecher.speech("有订单已经超时，请尽快处理");
-							break;
-						}else if(order.isHurryUp()){
-							speecher.speech("有订单即将超时，请尽快处理");
-							break;
+						if(!(BaseOrderFragment.this instanceof CompletedOrderFragment )){
+							if(order.isOutOfTime()){
+								speecher.speech("有订单已经超时，请尽快处理");
+								break;
+							}else if(order.isHurryUp()){
+								speecher.speech("有订单即将超时，请尽快处理");
+								break;
+							}
 						}
 					}
 				}
