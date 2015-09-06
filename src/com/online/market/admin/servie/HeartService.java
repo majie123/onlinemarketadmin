@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.util.Log;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.FindListener;
@@ -109,7 +110,7 @@ public class HeartService extends Service {
 
 			@Override
 			public void onSuccess(List<OrderBean> object) {
-//				Log.e("majie", "size = "+object.size());
+				Log.d("majie", "size = "+object.size());
 				if(object.size()!=0){
 					Intent intent=new Intent(getApplicationContext(),NewOrderActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

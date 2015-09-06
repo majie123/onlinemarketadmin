@@ -188,11 +188,11 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 					    new CloudCodeListener() {
 					            @Override
 					            public void onSuccess(Object object) {
-					                ShowToast( object.toString());
+					                ShowToast( "奖励成功");
 					            }
 					            @Override
 					            public void onFailure(int code, String msg) {
-					            	ShowToast("奖励失败:" + msg);
+					            	ShowToast("奖励失败" );
 					            }
 					        });
 				}
