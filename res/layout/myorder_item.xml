@@ -70,6 +70,17 @@
         android:text="配送中..."
         android:textColor="@color/orange"
         android:textSize="20sp" />
+    
+    <TextView
+        android:id="@+id/order_responer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ordertime"
+        android:layout_margin="0dp"
+        android:layout_marginTop="10dp"
+        android:text="负责人: 打包者 %s 配送者 %s"
+        android:textColor="@color/orange"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/delive"

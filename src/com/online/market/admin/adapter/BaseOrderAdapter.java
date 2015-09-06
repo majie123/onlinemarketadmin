@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -67,6 +68,7 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 		TextView tvOrderPhonenum=ViewHolder.get(convertView, R.id.orderphonenum);
 		TextView tvOrderPaymethod=ViewHolder.get(convertView, R.id.orderpaymethod);
 		tvOrderTime=ViewHolder.get(convertView, R.id.ordertime);
+		TextView tvResponer=ViewHolder.get(convertView, R.id.order_responer);
 		btDelive=ViewHolder.get(convertView, R.id.delive);
 		ImageView ivCall=ViewHolder.get(convertView, R.id.iv_call);
 		
@@ -74,6 +76,7 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText(bean.getPhonenum());
+        tvResponer.setText(String.format(tvResponer.getText().toString(), bean.getPacker(),bean.getDispatcher()));
         if(bean.getPayMethod()==OrderBean.PAYMETHOD_PAYFAILED){
         	tvOrderPaymethod.setText("付款失败");
         }else if(bean.getPayMethod()==OrderBean.PAYMETHOD_CASHONDELIVEY){
@@ -87,7 +90,9 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
         tvOrderTime.setText(time);
         String detail="";
         for(ShopCartaBean p:bean.getShopcarts()){
-        	detail+=p.getName()+" X "+p.getNumber()+"\n";
+        	if(p.getNumber()>0){
+        		detail+=p.getName()+" X "+p.getNumber()+"\n";
+        	}
         }
     	tvOrderDetail.setText("商品： "+detail);
     	ivCall.setOnClickListener(new OnClickListener() {
@@ -126,9 +131,13 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 			@Override
 			public void onSuccess() {
 				orderBeans.remove(bean);
+				
 				notifyDataSetChanged();
 				ShowToast("成功");
 				ProgressUtil.closeProgress();
+                if(orderBeans.size()==0){
+					((Activity)mContext).finish();
+				}
 			}
 			
 			@Override
