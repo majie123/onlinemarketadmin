@@ -78,7 +78,7 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
         tvOrderPhonenum.setText(bean.getPhonenum());
         String packer=bean.getPacker();
         String dispatcher=bean.getDispatcher();
-        if(packer.equals("untreater")){
+        if(packer.equals("untreated")){
         	packer="暂无";
         }
         if(dispatcher.equals("untreated")){
@@ -141,7 +141,7 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 				orderBeans.remove(bean);
 				
 				notifyDataSetChanged();
-				ShowToast("成功");
+				ShowToast("接单成功");
 				ProgressUtil.closeProgress();
                 if(orderBeans.size()==0){
 					((Activity)mContext).finish();
