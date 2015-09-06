@@ -58,7 +58,7 @@ public class Speecher {
 	}
 	
 	public void speech(String str){
-		mTts.startSpeaking(str,mTtsListener);
+//		mTts.startSpeaking(str,mTtsListener);
 	}
 	
 	private SynthesizerListener mTtsListener = new SynthesizerListener() {

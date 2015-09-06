@@ -76,7 +76,15 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
         tvOrderName.setText("收货人： "+bean.getReceiver());
         tvOrderAddress.setText("收货地址： "+bean.getAddress());
         tvOrderPhonenum.setText(bean.getPhonenum());
-        tvResponer.setText(String.format(tvResponer.getText().toString(), bean.getPacker(),bean.getDispatcher()));
+        String packer=bean.getPacker();
+        String dispatcher=bean.getDispatcher();
+        if(packer.equals("untreater")){
+        	packer="暂无";
+        }
+        if(dispatcher.equals("untreated")){
+        	dispatcher="暂无";
+        }
+        tvResponer.setText(String.format(tvResponer.getText().toString(), packer,dispatcher));
         if(bean.getPayMethod()==OrderBean.PAYMETHOD_PAYFAILED){
         	tvOrderPaymethod.setText("付款失败");
         }else if(bean.getPayMethod()==OrderBean.PAYMETHOD_CASHONDELIVEY){
