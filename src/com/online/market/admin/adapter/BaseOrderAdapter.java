@@ -142,7 +142,7 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				ShowToast("失败 "+arg1);
+				ShowToast("接单失败 \n"+arg1);
 				ProgressUtil.closeProgress();
 
 			}
