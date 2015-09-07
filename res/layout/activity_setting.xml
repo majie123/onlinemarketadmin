@@ -10,14 +10,6 @@
         android:id="@+id/topbar"
          >
          
-        <Button android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="设置"
-            android:visibility="gone"
-            android:id="@+id/bt_set"
-            android:layout_marginLeft="8dp"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,6 +24,35 @@
         android:background="@color/orange"
         android:id="@+id/line"/>
     
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp" 
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/my_data"
+        >
+
+        <ImageView
+            android:id="@+id/avatar_pic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/wwj_748"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/avatar_pic"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:text="未登录"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:id="@+id/user_name" />
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/bt_publish_commodity"
@@ -44,7 +65,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="编辑商品" />
-    
+    <Button
+        android:id="@+id/bt_speech_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关闭语音播报" />
+      
      <Button
         android:id="@+id/bt_setoffline"
         android:layout_width="match_parent"

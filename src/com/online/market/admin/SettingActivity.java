@@ -7,6 +7,7 @@ import com.online.market.admin.servie.HeartService;
 import com.online.market.admin.util.ActivityControl;
 import com.online.market.admin.util.DialogUtil;
 import com.online.market.admin.util.SharedPrefUtil;
+import com.online.market.admin.util.Speecher;
 
 import cn.bmob.v3.BmobUser;
 import android.app.Activity;
@@ -16,13 +17,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class SettingActivity extends BaseActivity {
 	public static final String STATE="state";
 	public static final String STATE_ONLINE="online";
 	public static final String STATE_OFFLINE="offline";
-
-	private Button btPublish,btLogout,btSetOffline,btEdit;
+	
+	private Button btPublish,btLogout,btSetOffline,btEdit,btSpeechUp;
+	private TextView tvUsername;
 	private SharedPrefUtil su;
 	
 	@Override
@@ -42,6 +45,8 @@ public class SettingActivity extends BaseActivity {
 		btLogout=(Button) findViewById(R.id.bt_logout);
 		btSetOffline=(Button) findViewById(R.id.bt_setoffline);
 
+		btSpeechUp=(Button) findViewById(R.id.bt_speech_up);
+		tvUsername=(TextView) findViewById(R.id.user_name);
 	}
 
 	@Override
@@ -55,6 +60,12 @@ public class SettingActivity extends BaseActivity {
 		}else{
 			btSetOffline.setVisibility(View.GONE);
 		}
+		
+		if(user.getNickname()!=null){
+			tvUsername.setText(user.getNickname());
+		}else{
+			tvUsername.setText(user.getUsername());
+		}
 	}
 	
 	private void setOnlineState(){
@@ -67,6 +78,18 @@ public class SettingActivity extends BaseActivity {
 
 	@Override
 	public void setListeners() {
+		btSpeechUp.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Speecher.SPEECH_UP=!Speecher.SPEECH_UP;
+				if(Speecher.SPEECH_UP){
+					btSpeechUp.setText("关闭语音播报");
+				}else{
+					btSpeechUp.setText("开启语音播报");
+				}
+			}
+		});
 		
 		btEdit.setOnClickListener(new OnClickListener() {
 			

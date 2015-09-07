@@ -110,7 +110,7 @@ public class HeartService extends Service {
 
 			@Override
 			public void onSuccess(List<OrderBean> object) {
-				Log.d("majie", "size = "+object.size());
+				Log.d("heartservice", "object size = "+object.size());
 				if(object.size()!=0){
 					Intent intent=new Intent(getApplicationContext(),NewOrderActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

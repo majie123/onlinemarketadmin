@@ -11,6 +11,8 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 
 public class Speecher {
+	public static boolean SPEECH_UP=true;
+	
 	private static Speecher speecher;
 	private SpeechSynthesizer mTts;
 
@@ -58,7 +60,9 @@ public class Speecher {
 	}
 	
 	public void speech(String str){
-		mTts.startSpeaking(str,mTtsListener);
+		if(SPEECH_UP){
+//			mTts.startSpeaking(str,mTtsListener);
+		}
 	}
 	
 	private SynthesizerListener mTtsListener = new SynthesizerListener() {

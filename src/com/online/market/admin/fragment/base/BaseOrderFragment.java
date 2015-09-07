@@ -34,6 +34,7 @@ public abstract class BaseOrderFragment extends BaseFragment {
 	private TextView tvNoOrder;
 	protected BaseOrderAdapter adapter;
 	private Speecher speecher;
+	private int skip=0;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,8 +76,10 @@ public abstract class BaseOrderFragment extends BaseFragment {
 			@Override
 			public void onSuccess(List<OrderBean> object) {
 				ProgressUtil.closeProgress();
+				
 				orders.addAll(object);
 				xlv.stopRefresh();
+				xlv.stopLoadMore();
 				setData();
 				
 			}
