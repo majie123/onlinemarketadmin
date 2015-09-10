@@ -173,7 +173,7 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 			public void onSuccess() {
 				orderBeans.remove(bean);
 				notifyDataSetChanged();
-				ShowToast("成功");
+//				ShowToast("成功");
 				ProgressUtil.closeProgress();
 				if(bean.getState()==OrderBean.STATE_DEPART){
 					AsyncCustomEndpoints ace = new AsyncCustomEndpoints();
@@ -188,7 +188,7 @@ public abstract class BaseOrderAdapter extends MyBaseAdapter {
 					    new CloudCodeListener() {
 					            @Override
 					            public void onSuccess(Object object) {
-					                ShowToast( "奖励成功");
+					                ShowToast( "成功"+object.toString());
 					            }
 					            @Override
 					            public void onFailure(int code, String msg) {
