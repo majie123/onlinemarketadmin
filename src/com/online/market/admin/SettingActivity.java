@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SettingActivity extends BaseActivity {
@@ -24,6 +25,7 @@ public class SettingActivity extends BaseActivity {
 	public static final String STATE_ONLINE="online";
 	public static final String STATE_OFFLINE="offline";
 	
+	private ImageView ivPic;
 	private Button btPublish,btLogout,btSetOffline,btEdit,btSpeechUp;
 	private TextView tvUsername;
 	private SharedPrefUtil su;
@@ -47,6 +49,8 @@ public class SettingActivity extends BaseActivity {
 
 		btSpeechUp=(Button) findViewById(R.id.bt_speech_up);
 		tvUsername=(TextView) findViewById(R.id.user_name);
+		
+		ivPic=(ImageView) findViewById(R.id.iv_pic);
 	}
 
 	@Override
@@ -65,6 +69,9 @@ public class SettingActivity extends BaseActivity {
 			tvUsername.setText(user.getNickname());
 		}else{
 			tvUsername.setText(user.getUsername());
+		}
+		if(user.getAvatar()!=null){
+			bitmapUtils.display(ivPic, user.getAvatar().getFileUrl(this),config);
 		}
 	}
 	

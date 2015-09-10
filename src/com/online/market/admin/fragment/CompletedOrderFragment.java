@@ -11,6 +11,7 @@ public class CompletedOrderFragment extends BaseOrderFragment {
 	@Override
 	protected void setBmobQueryCondition(BmobQuery<OrderBean> query) {
 		query.addWhereEqualTo("state", OrderBean.STATE_DELIVED);
+		query.order("-updatedAt");
 	}
 
 	@Override

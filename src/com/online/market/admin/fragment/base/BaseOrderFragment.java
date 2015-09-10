@@ -71,17 +71,30 @@ public abstract class BaseOrderFragment extends BaseFragment {
 		}
 		setBmobQueryCondition(query);
 		query.setLimit(10);
+		query.setSkip(skip);
 		query.findObjects(getActivity(), new FindListener<OrderBean>() {
 
 			@Override
 			public void onSuccess(List<OrderBean> object) {
 				ProgressUtil.closeProgress();
-				
-				orders.addAll(object);
 				xlv.stopRefresh();
 				xlv.stopLoadMore();
-				setData();
 				
+				orders.addAll(object);
+				 if(skip==0){
+					 setData();
+				 }else{
+					 adapter.notifyDataSetChanged();
+				 }
+				 
+				 xlv.setSelection(skip);
+				if(object.size()>=10){
+					xlv.setPullLoadEnable(true);
+				}
+//				else{
+//					xlv.setPullLoadEnable(false);
+//				}
+				skip+=object.size();
 			}
 
 			@Override
@@ -89,6 +102,7 @@ public abstract class BaseOrderFragment extends BaseFragment {
 				ProgressUtil.closeProgress();
 				toastMsg(msg);
 				xlv.stopRefresh();
+				xlv.stopLoadMore();
 			}
 		});	
 	}
@@ -103,6 +117,9 @@ public abstract class BaseOrderFragment extends BaseFragment {
 		xlv.setAdapter(adapter);
 	}
 	
+	/***
+	 * 初始化adapter,抽象方法
+	 */
 	protected abstract void initAdapter();
 
 	@Override
@@ -119,12 +136,13 @@ public abstract class BaseOrderFragment extends BaseFragment {
 			@Override
 			public void onRefresh() {
 				orders.clear();
+				skip=0;
 				queryOrders();
 			}
 			
 			@Override
 			public void onLoadMore() {
-				
+				queryOrders();
 			}
 		});
 	}
