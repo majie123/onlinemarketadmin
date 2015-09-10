@@ -57,7 +57,17 @@ public class SettingActivity extends BaseActivity {
 	public void initData() {
 		su=new SharedPrefUtil(this, "tiantianadmin");
 		setOnlineState();
-
+		
+		if(user.getGroup()==MyUser.GROUP_ROOT){
+			btSpeechUp.setVisibility(View.GONE);
+		}else{
+			if(Speecher.SPEECH_UP){
+				btSpeechUp.setText("关闭语音播报");
+			}else{
+				btSpeechUp.setText("开启语音播报");
+			}
+		}
+		
 		if(user.getGroup()!=MyUser.GROUP_ROOT){
 			btPublish.setVisibility(View.GONE);
 			btEdit.setVisibility(View.GONE);

@@ -61,7 +61,7 @@ public class Speecher {
 	
 	public void speech(String str){
 		if(SPEECH_UP){
-//			mTts.startSpeaking(str,mTtsListener);
+			mTts.startSpeaking(str,mTtsListener);
 		}
 	}
 	
