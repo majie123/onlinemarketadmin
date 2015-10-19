@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -104,7 +105,9 @@ public class HeartService extends Service {
 		}else if(user.getGroup()==MyUser.GROUP_DISPATCHER){
 			query.addWhereEqualTo("dispatcher", "untreated");
 		}
-		query.addWhereEqualTo("unit", user.getUnit());
+		if(!TextUtils.isEmpty(user.getUnit())){
+			query.addWhereEqualTo("unit", user.getUnit());
+		}
 		query.addWhereNotEqualTo("state", OrderBean.STATE_DELIVED);
 		query.setLimit(10);
 		query.findObjects(this, new FindListener<OrderBean>() {
