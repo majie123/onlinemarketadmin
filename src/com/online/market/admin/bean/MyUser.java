@@ -17,6 +17,7 @@ public class MyUser extends BmobUser {
 	private String nickname;
 	private BmobFile avatar;
 	private int group;
+	private String unit;
 	
 	/***
 	 * 我的邀请码
@@ -66,6 +67,12 @@ public class MyUser extends BmobUser {
 	}
 	public void setGroup(int group) {
 		this.group = group;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	
 }

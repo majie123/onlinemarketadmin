@@ -104,6 +104,7 @@ public class HeartService extends Service {
 		}else if(user.getGroup()==MyUser.GROUP_DISPATCHER){
 			query.addWhereEqualTo("dispatcher", "untreated");
 		}
+		query.addWhereEqualTo("unit", user.getUnit());
 		query.addWhereNotEqualTo("state", OrderBean.STATE_DELIVED);
 		query.setLimit(10);
 		query.findObjects(this, new FindListener<OrderBean>() {
